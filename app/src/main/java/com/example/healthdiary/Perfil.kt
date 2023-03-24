@@ -41,6 +41,7 @@ class Perfil : AppCompatActivity() {
 
     private lateinit var binding: ActivityPerfilBinding
     private var firsttime = true
+    private var imc: Float = 0f
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -59,7 +60,7 @@ class Perfil : AppCompatActivity() {
                         binding.etnombre.setText(settingsModel.nombre)
                         binding.rsAltura.setValues(settingsModel.altura.toFloat())
                         binding.rsPeso.setValues(settingsModel.peso)
-                        //binding.tvIMC.text = settingsModel.imc
+                        binding.tvIMC.setText(settingsModel.imc.toString())
                         binding.switchdark.isChecked = settingsModel.darkmode
 
                         firsttime = !firsttime
@@ -121,11 +122,13 @@ class Perfil : AppCompatActivity() {
         dataStore.edit { preferences ->
             //guardamos como un entero en la clave ALTURA el valor que recibios por parametro
             preferences[intPreferencesKey(ALTURA)] = value
+            calcularIMC()
         }
     }
     private suspend fun savePeso(value: Float){
         dataStore.edit{preferences ->
             preferences[floatPreferencesKey(PESO)] = value
+            calcularIMC()
         }
     }
     //creo tambien la funcion para almacenar si hemos seleccionado o no el modo oscuro
@@ -141,15 +144,34 @@ class Perfil : AppCompatActivity() {
         }
     }
 
+    private suspend fun saveIMC(){
+        dataStore.edit { preferences ->
+            preferences[floatPreferencesKey(IMC)] = imc
+        }
+    }
+
+    //Creamos una funcion para calcular el IMC en funcion de la altura y el peso
+    //tengo que hacerla en el hilo ppal porque modifica la UI
+    private fun calcularIMC(){
+        runOnUiThread {
+            imc = binding.rsPeso.values.get(0)/((binding.rsAltura.values.get(0) / 100) * (binding.rsAltura.values.get(0) / 100))
+            binding.tvIMC.text = imc.toInt().toString()
+        }
+        //guardo el valor en la bbdd de datastore
+        CoroutineScope(Dispatchers.IO).launch {
+            saveIMC()
+        }
+
+    }
 
     /*
     * Hemos guardaddo datos en la base de datos con las funciones anteriores, pero logicamente
     * necesito recuperar esos datos. Lo hacemos con Flows. Flow es una especie de canal que
     * mantiene el contacto constante para que se actualice lo que sea cada vez que haya algun
-    * cambio. Creamos una funcion que recuperara los datos cada vez que sea llamada */
-    /*Los flow devuelven un solo tipo de dato, asi que para devolver todos (hay tres boolean y un int
-        * creamos una data class para encapsular todos los valores y devolvemos un objeto del tipo
-        * de esa data class*/
+    * cambio. Creamos una funcion que recuperara los datos cada vez que sea llamada
+    *Los flow devuelven un solo tipo de dato, asi que para devolver todos (hay varios tipos en nuestro xml
+    * creamos una data class para encapsular todos los valores y devolvemos un objeto del tipo
+    * de esa data class*/
     private fun getSettings(): Flow<SettingsModel> {
         //la siguiente linea llama al datastore y recorre lo que haya. al ser un flow hay que recorrerlo
         return dataStore.data.map { preferences ->
@@ -160,7 +182,7 @@ class Perfil : AppCompatActivity() {
                 //sexo = preferences[booleanPreferencesKey(SEXO)] ?: false,
                 altura = preferences[intPreferencesKey(ALTURA)] ?: 150,
                 peso = preferences[floatPreferencesKey(PESO)] ?: 60f,
-                //imc = preferences[floatPreferencesKey(IMC)] ?: 0f,
+                imc = preferences[floatPreferencesKey(IMC)] ?: 0f,
                 darkmode = preferences[booleanPreferencesKey(DARKMODE)] ?: false
             )
 

@@ -8,5 +8,5 @@ data class SettingsModel(
     var altura: Int,
     var peso: Float,
     var darkmode: Boolean,
-    //var imc: Float
+    var imc: Float
 )
