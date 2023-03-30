@@ -14,10 +14,16 @@
         android:theme="@style/Theme.HealthDiary"
         tools:targetApi="31">
         <activity
-            android:name=".Perfil"
+            android:name=".ui.PresionArterialActivity"
             android:exported="false" />
         <activity
-            android:name=".MainActivity"
+            android:name=".ui.PresionArterialAdd"
+            android:exported="false" />
+        <activity
+            android:name=".ui.Perfil"
+            android:exported="false" />
+        <activity
+            android:name=".ui.MainActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

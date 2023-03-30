@@ -1,4 +1,4 @@
-package com.example.healthdiary
+package com.example.healthdiary.ui
 
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
@@ -20,9 +20,15 @@ class MainActivity : AppCompatActivity() {
 
     private fun initListener() {
         binding.btnperfil.setOnClickListener {
-            val intent = Intent(this,Perfil::class.java)
+            val intent = Intent(this, Perfil::class.java)
             startActivity(intent)
         }
+
+        binding.btnpresionarterial.setOnClickListener {
+            val intent = Intent(this,PresionArterialActivity::class.java)
+            startActivity(intent)
+        }
+
     }
 
     private fun initUI() {

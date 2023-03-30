@@ -1,4 +1,4 @@
-package com.example.healthdiary
+package com.example.healthdiary.ui
 
 import android.content.Context
 import androidx.appcompat.app.AppCompatActivity
@@ -156,6 +156,9 @@ class Perfil : AppCompatActivity() {
         runOnUiThread {
             imc = binding.rsPeso.values.get(0)/((binding.rsAltura.values.get(0) / 100) * (binding.rsAltura.values.get(0) / 100))
             binding.tvIMC.text = imc.toInt().toString()
+            if(imc < 20){
+
+            }
         }
         //guardo el valor en la bbdd de datastore
         CoroutineScope(Dispatchers.IO).launch {
