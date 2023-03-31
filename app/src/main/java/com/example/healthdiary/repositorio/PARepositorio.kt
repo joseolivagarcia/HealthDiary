@@ -19,10 +19,10 @@ class PARepositorio(val padao: PA_DAO) {
     suspend fun insertPA_items(paitem: PA_item_model){
         padao.insertPA_item(paitem)
     }
-    suspend fun deletepostit(paitem: PA_item_model){
+    suspend fun deletePA_items(paitem: PA_item_model){
         padao.deletePA_item(paitem)
     }
-    suspend fun updatepostit(paitem: PA_item_model){
+    suspend fun updatePA_items(paitem: PA_item_model){
         padao.updatePA_item(paitem)
     }
 }

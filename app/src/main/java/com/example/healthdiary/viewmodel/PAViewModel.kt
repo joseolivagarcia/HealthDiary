@@ -3,9 +3,12 @@ package com.example.healthdiary.viewmodel
 import android.app.Application
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
+import androidx.lifecycle.viewModelScope
 import com.example.healthdiary.bd.PADatabase
 import com.example.healthdiary.models.PA_item_model
 import com.example.healthdiary.repositorio.PARepositorio
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 
 class PAViewModel(aplication: Application): AndroidViewModel(aplication) {
     /*
@@ -25,5 +28,19 @@ class PAViewModel(aplication: Application): AndroidViewModel(aplication) {
         repositorio = PARepositorio(dao)
         //y obtengo todos los registros en la var que creé arriba
         listaregistros = repositorio.listaPA_items
+    }
+    /*
+     Me creo las funciones para insertat,borrar o editar registros. LLamare a las funciones que
+     hay en el repositorio.
+     Lo hago con viewModelScope para no hacerlo en el hilo ppal y no bloquear la app
+     */
+    fun addRegistro (paitem: PA_item_model) = viewModelScope.launch(Dispatchers.IO) {
+        repositorio.insertPA_items(paitem)
+    }
+    fun deleteRegistro(paitem: PA_item_model) = viewModelScope.launch(Dispatchers.IO) {
+        repositorio.deletePA_items(paitem)
+    }
+    fun updateRegistro(paitem: PA_item_model) = viewModelScope.launch(Dispatchers.IO) {
+        repositorio.updatePA_items(paitem)
     }
 }
