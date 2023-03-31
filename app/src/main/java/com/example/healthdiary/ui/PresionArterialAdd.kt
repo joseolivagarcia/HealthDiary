@@ -52,10 +52,11 @@ class PresionArterialAdd : AppCompatActivity() {
             val newRegistro = PA_item_model(mediaPAS,mediaPAD,mediaPPP,currentdatetime)
             //y lo guardo en la bbdd a traves del viewmodel
             viewModel.addRegistro(newRegistro)
+            //vuelvo a la actividad principal
+            startActivity(Intent(applicationContext, PresionArterialActivity::class.java))
+            this.finish()
         }
-        //vuelvo a la actividad principal
-        //startActivity(Intent(applicationContext, MainActivity::class.java))
-        //this.finish()
+
 
     }
 }
