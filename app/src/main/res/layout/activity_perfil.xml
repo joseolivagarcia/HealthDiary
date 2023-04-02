@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context=".Perfil">
+    tools:context=".ui.Perfil">
 
     <com.google.android.material.textfield.TextInputEditText
         android:id="@+id/etnombre"
@@ -21,20 +21,20 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="16dp"
-        android:gravity="center">
+        android:gravity="center"
+        android:orientation="horizontal">
 
         <RadioButton
             android:id="@+id/rbhombre"
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:buttonTint="@color/teal_700"
-            android:checked="true"
             android:text="Hombre"
             android:textColor="@color/black" />
 
         <RadioButton
             android:id="@+id/rbmujer"
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:buttonTint="@color/teal_700"
             android:text="Mujer"

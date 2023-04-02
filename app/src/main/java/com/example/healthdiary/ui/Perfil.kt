@@ -1,6 +1,8 @@
 package com.example.healthdiary.ui
 
+import android.annotation.SuppressLint
 import android.content.Context
+import android.graphics.Color
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
@@ -9,6 +11,7 @@ import androidx.core.widget.addTextChangedListener
 import androidx.datastore.core.DataStore
 import androidx.datastore.preferences.core.*
 import androidx.datastore.preferences.preferencesDataStore
+import com.example.healthdiary.R
 import com.example.healthdiary.databinding.ActivityPerfilBinding
 import com.example.healthdiary.models.SettingsModel
 import kotlinx.coroutines.CoroutineScope
@@ -47,7 +50,6 @@ class Perfil : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding = ActivityPerfilBinding.inflate(layoutInflater)
         setContentView(binding.root)
-
         /*
         * antes de inicializar la UI me tengo que enganchar al flow para que recupere los datos (settings)
         * que esten guardados o coja los que se crean por defecto. Esto logicamente hay que hacerlo en
@@ -59,6 +61,7 @@ class Perfil : AppCompatActivity() {
                     runOnUiThread {
                         binding.etnombre.setText(settingsModel.nombre)
                         binding.rsAltura.setValues(settingsModel.altura.toFloat())
+                        binding.rgsexo.check(settingsModel.sexo)
                         binding.rsPeso.setValues(settingsModel.peso)
                         binding.tvIMC.setText(settingsModel.imc.toString())
                         binding.switchdark.isChecked = settingsModel.darkmode
@@ -75,18 +78,16 @@ class Perfil : AppCompatActivity() {
 
         /*hacemos que cuando cambie el slider de la altura y/o el peso pase algo.
         Solo necesitamos el valor de value, por eso las _ en los otros parametros.
-        Lo que voy a hacer es guardar el valor llamando a saveVolume, pero ojo! hay que
+        Lo que voy a hacer es guardar el valor llamando a saveAltura y savePeso, pero ojo! hay que
         hacerlo con una corutina
         */
         binding.rsAltura.addOnChangeListener { _, value, _ ->
-            Log.i("oliva", "La altura es $value")
             CoroutineScope(Dispatchers.IO).launch {
                 saveAltura(value.toInt())
             }
         }
 
         binding.rsPeso.addOnChangeListener { _, value, _ ->
-            Log.i("oliva", "El peso es $value")
             CoroutineScope(Dispatchers.IO).launch {
                 savePeso(value)
             }
@@ -110,7 +111,15 @@ class Perfil : AppCompatActivity() {
         binding.etnombre.addTextChangedListener {
             CoroutineScope(Dispatchers.IO).launch {
             saveNombre()
+            }
         }
+
+        //para guardar el sexo, obtenemos la id del radiobutton seleccionado a traves del radiogroup
+        //si no cambiamos la seleccion, sexo valdra lo que estuviera marcado por defecto
+        binding.rgsexo.setOnCheckedChangeListener{_, value ->
+            CoroutineScope(Dispatchers.IO).launch {
+            saveSexo(value)
+            }
         }
 
     }
@@ -150,15 +159,28 @@ class Perfil : AppCompatActivity() {
         }
     }
 
+    private suspend fun saveSexo(sexo: Int){
+        dataStore.edit{preferences ->
+            preferences[intPreferencesKey(SEXO)] = sexo
+            Log.i("sexo","He guardado $sexo")
+        }
+    }
+
     //Creamos una funcion para calcular el IMC en funcion de la altura y el peso
     //tengo que hacerla en el hilo ppal porque modifica la UI
+
     private fun calcularIMC(){
         runOnUiThread {
             imc = binding.rsPeso.values.get(0)/((binding.rsAltura.values.get(0) / 100) * (binding.rsAltura.values.get(0) / 100))
-            binding.tvIMC.text = imc.toInt().toString()
-            if(imc < 20){
-
+            if(imc < 19){
+                binding.tvIMC.setTextColor(Color.parseColor("#2196F3"))
+            }else if(imc > 19 && imc < 25){
+                binding.tvIMC.setTextColor(Color.parseColor("#0BDD14"))
+            }else{
+                binding.tvIMC.setTextColor(Color.parseColor("#F11707"))
             }
+            binding.tvIMC.text = imc.toInt().toString()
+
         }
         //guardo el valor en la bbdd de datastore
         CoroutineScope(Dispatchers.IO).launch {
@@ -178,11 +200,11 @@ class Perfil : AppCompatActivity() {
     private fun getSettings(): Flow<SettingsModel> {
         //la siguiente linea llama al datastore y recorre lo que haya. al ser un flow hay que recorrerlo
         return dataStore.data.map { preferences ->
-            //creo un objeto de tipo SettingsModel pasandole los 4 parametros que he guardado
+            //creo un objeto de tipo SettingsModel pasandole los 6 parametros que he guardado
             //como los parametros pueden ser nulos usamos el operador elvis ?: para dar un valor por defecto si fuera nulo
             SettingsModel(
                 nombre = preferences[stringPreferencesKey(NOMBRE)] ?: "Tu nombre",
-                //sexo = preferences[booleanPreferencesKey(SEXO)] ?: false,
+                sexo = preferences[intPreferencesKey(SEXO)] ?: binding.rbhombre.id,
                 altura = preferences[intPreferencesKey(ALTURA)] ?: 150,
                 peso = preferences[floatPreferencesKey(PESO)] ?: 60f,
                 imc = preferences[floatPreferencesKey(IMC)] ?: 0f,
