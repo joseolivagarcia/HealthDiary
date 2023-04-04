@@ -12,4 +12,10 @@
     <color name="blue">#2196F3</color>
     <color name="green">#0BDD14</color>
     <color name="red">#F11707</color>
+    <color name="radiobutton">#1976D2</color>
+    <!-- Degradado -->
+    <color name="degradado1">#6341B6</color>
+    <color name="degradado2">#7B1FA2</color>
+    <color name="degradado3">#1D025C</color>
+
 </resources>

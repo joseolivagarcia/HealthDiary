@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -20,318 +21,369 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <TextView
-        android:id="@+id/tvlectura1"
+    <androidx.cardview.widget.CardView
+        android:id="@+id/cvlectura1"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="80dp"
+        android:layout_marginTop="20dp"
         android:layout_marginHorizontal="16dp"
-        android:text="LECTURA 1"
-        android:textSize="18sp"
-        android:textStyle="italic"
-        app:layout_constraintEnd_toEndOf="parent"
+        app:cardCornerRadius="20dp"
+        app:layout_constraintTop_toBottomOf="@id/tvtitulo"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/tvtitulo" />
+        app:layout_constraintEnd_toEndOf="parent">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@drawable/degradado_items">
 
-    <LinearLayout
-        android:id="@+id/Llpresion1"
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/tvlectura1"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="16dp"
+            android:layout_marginTop="15dp"
+            android:text="LECTURA 1"
+            android:textSize="18sp"
+            android:textStyle="italic"
+            android:textColor="@color/white"/>
+
+        <LinearLayout
+            android:id="@+id/Llpresion1"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="45dp"
+            android:layout_marginHorizontal="16dp"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/tvpas1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:text="PAS"
+                android:textSize="18sp"
+                android:textStyle="italic|bold"
+                android:textColor="@color/white"/>
+
+            <TextView
+                android:id="@+id/tvpad1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:text="PAD"
+                android:textSize="18sp"
+                android:textStyle="italic|bold"
+                android:textColor="@color/white"/>
+
+            <TextView
+                android:id="@+id/tvfc1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:text="FC"
+                android:textSize="18sp"
+                android:textStyle="italic|bold"
+                android:textColor="@color/white"/>
+        </LinearLayout>
+        <LinearLayout
+            android:id="@+id/Llpresiondatos1"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="70dp"
+            android:layout_marginBottom="20dp"
+            android:layout_marginHorizontal="16dp"
+            android:orientation="horizontal">
+
+            <EditText
+                android:id="@+id/etpasdato1"
+                android:layout_width="wrap_content"
+                android:layout_height="48dp"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:hint="0"
+                android:textColorHint="@color/white"
+                android:textSize="18sp"
+                android:textStyle="italic|bold"
+                android:textColor="@color/white"
+                android:inputType="numberDecimal"
+                android:maxWidth="6dp"/>
+
+            <EditText
+                android:id="@+id/etpaddato1"
+                android:layout_width="wrap_content"
+                android:layout_height="48dp"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:hint="0"
+                android:textColorHint="@color/white"
+                android:textSize="18sp"
+                android:textStyle="italic|bold"
+                android:textColor="@color/white"
+                android:inputType="numberDecimal"
+                android:maxWidth="6dp"/>
+
+            <EditText
+                android:id="@+id/etfcdato1"
+                android:layout_width="wrap_content"
+                android:layout_height="48dp"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:hint="0"
+                android:textColorHint="@color/white"
+                android:textSize="18sp"
+                android:textStyle="italic|bold"
+                android:textColor="@color/white"
+                android:inputType="numberDecimal"
+                android:maxWidth="6dp"/>
+        </LinearLayout>
+    </androidx.cardview.widget.CardView>
+    <androidx.cardview.widget.CardView
+        android:id="@+id/cvlectura2"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="15dp"
+        android:layout_marginTop="20dp"
         android:layout_marginHorizontal="16dp"
-        android:orientation="horizontal"
-        app:layout_constraintEnd_toEndOf="parent"
+        app:cardCornerRadius="20dp"
+        app:layout_constraintTop_toBottomOf="@id/cvlectura1"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/tvlectura1">
+        app:layout_constraintEnd_toEndOf="parent">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@drawable/degradado_items">
+
+        </LinearLayout>
 
         <TextView
-            android:id="@+id/tvpas1"
-            android:layout_width="wrap_content"
+            android:id="@+id/tvlectura2"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:gravity="center"
-            android:text="PAS"
+            android:layout_marginHorizontal="16dp"
+            android:layout_marginTop="15dp"
+            android:text="LECTURA 2"
             android:textSize="18sp"
-            android:textStyle="italic|bold" />
+            android:textStyle="italic"
+            android:textColor="@color/white"/>
 
-        <TextView
-            android:id="@+id/tvpad1"
-            android:layout_width="wrap_content"
+        <LinearLayout
+            android:id="@+id/Llpresion2"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:gravity="center"
-            android:text="PAD"
-            android:textSize="18sp"
-            android:textStyle="italic|bold" />
+            android:layout_marginTop="45dp"
+            android:layout_marginHorizontal="16dp"
+            android:orientation="horizontal">
 
-        <TextView
-            android:id="@+id/tvfc1"
-            android:layout_width="wrap_content"
+            <TextView
+                android:id="@+id/tvpas2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:text="PAS"
+                android:textSize="18sp"
+                android:textStyle="italic|bold"
+                android:textColor="@color/white"/>
+
+            <TextView
+                android:id="@+id/tvpad2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:text="PAD"
+                android:textSize="18sp"
+                android:textStyle="italic|bold"
+                android:textColor="@color/white"/>
+
+            <TextView
+                android:id="@+id/tvfc2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:text="FC"
+                android:textSize="18sp"
+                android:textStyle="italic|bold"
+                android:textColor="@color/white"/>
+        </LinearLayout>
+        <LinearLayout
+            android:id="@+id/Llpresiondatos2"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:gravity="center"
-            android:text="FC"
-            android:textSize="18sp"
-            android:textStyle="italic|bold" />
+            android:layout_marginTop="70dp"
+            android:layout_marginBottom="20dp"
+            android:layout_marginHorizontal="16dp"
+            android:orientation="horizontal">
 
+            <EditText
+                android:id="@+id/etpasdato2"
+                android:layout_width="wrap_content"
+                android:layout_height="48dp"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:hint="0"
+                android:textColorHint="@color/white"
+                android:textSize="18sp"
+                android:textStyle="italic|bold"
+                android:textColor="@color/white"
+                android:inputType="numberDecimal"
+                android:maxWidth="6dp"/>
 
-    </LinearLayout>
+            <EditText
+                android:id="@+id/etpaddato2"
+                android:layout_width="wrap_content"
+                android:layout_height="48dp"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:hint="0"
+                android:textColorHint="@color/white"
+                android:textSize="18sp"
+                android:textStyle="italic|bold"
+                android:textColor="@color/white"
+                android:inputType="numberDecimal"
+                android:maxWidth="6dp"/>
 
-    <LinearLayout
-        android:id="@+id/Llpresiondatos1"
+            <EditText
+                android:id="@+id/etfcdato2"
+                android:layout_width="wrap_content"
+                android:layout_height="48dp"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:hint="0"
+                android:textColorHint="@color/white"
+                android:textSize="18sp"
+                android:textStyle="italic|bold"
+                android:textColor="@color/white"
+                android:inputType="numberDecimal"
+                android:maxWidth="6dp"/>
+        </LinearLayout>
+    </androidx.cardview.widget.CardView>
+    <androidx.cardview.widget.CardView
+        android:id="@+id/cvlectura3"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="15dp"
+        android:layout_marginTop="20dp"
         android:layout_marginHorizontal="16dp"
-        android:orientation="horizontal"
-        app:layout_constraintEnd_toEndOf="parent"
+        app:cardCornerRadius="20dp"
+        app:layout_constraintTop_toBottomOf="@id/cvlectura2"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/Llpresion1">
+        app:layout_constraintEnd_toEndOf="parent">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@drawable/degradado_items">
 
-        <EditText
-            android:id="@+id/etpasdato1"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:gravity="center"
-            android:hint="0"
-            android:textSize="18sp"
-            android:textStyle="italic|bold"
-            android:inputType="numberDecimal"
-            android:maxWidth="6dp"/>
-
-        <EditText
-            android:id="@+id/etpaddato1"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:gravity="center"
-            android:hint="0"
-            android:textSize="18sp"
-            android:textStyle="italic|bold"
-            android:inputType="numberDecimal"
-            android:maxWidth="6dp"/>
-
-        <EditText
-            android:id="@+id/etfcdato1"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:gravity="center"
-            android:hint="0"
-            android:textSize="18sp"
-            android:textStyle="italic|bold"
-            android:inputType="numberDecimal"
-            android:maxWidth="6dp"/>
-    </LinearLayout>
-
-    <TextView
-        android:id="@+id/tvlectura2"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_margin="16dp"
-        android:text="LECTURA 2"
-        android:textSize="18sp"
-        android:textStyle="italic"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/Llpresiondatos1" />
-
-    <LinearLayout
-        android:id="@+id/Llpresion2"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="15dp"
-        android:layout_marginHorizontal="16dp"
-        android:orientation="horizontal"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/tvlectura2">
+        </LinearLayout>
 
         <TextView
-            android:id="@+id/tvpas2"
-            android:layout_width="wrap_content"
+            android:id="@+id/tvlectura3"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:gravity="center"
-            android:text="PAS"
+            android:layout_marginHorizontal="16dp"
+            android:layout_marginTop="15dp"
+            android:text="LECTURA 3"
             android:textSize="18sp"
-            android:textStyle="italic|bold" />
+            android:textStyle="italic"
+            android:textColor="@color/white"/>
 
-        <TextView
-            android:id="@+id/tvpad2"
-            android:layout_width="wrap_content"
+        <LinearLayout
+            android:id="@+id/Llpresion3"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:gravity="center"
-            android:text="PAD"
-            android:textSize="18sp"
-            android:textStyle="italic|bold" />
+            android:layout_marginTop="45dp"
+            android:layout_marginHorizontal="16dp"
+            android:orientation="horizontal">
 
-        <TextView
-            android:id="@+id/tvfc2"
-            android:layout_width="wrap_content"
+            <TextView
+                android:id="@+id/tvpas3"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:text="PAS"
+                android:textSize="18sp"
+                android:textStyle="italic|bold"
+                android:textColor="@color/white"/>
+
+            <TextView
+                android:id="@+id/tvpad3"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:text="PAD"
+                android:textSize="18sp"
+                android:textStyle="italic|bold"
+                android:textColor="@color/white"/>
+
+            <TextView
+                android:id="@+id/tvfc3"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:text="FC"
+                android:textSize="18sp"
+                android:textStyle="italic|bold"
+                android:textColor="@color/white"/>
+        </LinearLayout>
+        <LinearLayout
+            android:id="@+id/Llpresiondatos3"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:gravity="center"
-            android:text="FC"
-            android:textSize="18sp"
-            android:textStyle="italic|bold" />
+            android:layout_marginTop="70dp"
+            android:layout_marginBottom="20dp"
+            android:layout_marginHorizontal="16dp"
+            android:orientation="horizontal">
 
+            <EditText
+                android:id="@+id/etpasdato3"
+                android:layout_width="wrap_content"
+                android:layout_height="48dp"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:hint="0"
+                android:textColorHint="@color/white"
+                android:textSize="18sp"
+                android:textStyle="italic|bold"
+                android:textColor="@color/white"
+                android:inputType="numberDecimal"
+                android:maxWidth="6dp"/>
 
-    </LinearLayout>
+            <EditText
+                android:id="@+id/etpaddato3"
+                android:layout_width="wrap_content"
+                android:layout_height="48dp"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:hint="0"
+                android:textColorHint="@color/white"
+                android:textSize="18sp"
+                android:textStyle="italic|bold"
+                android:textColor="@color/white"
+                android:inputType="numberDecimal"
+                android:maxWidth="6dp"/>
 
-    <LinearLayout
-        android:id="@+id/Llpresiondatos2"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="15dp"
-        android:orientation="horizontal"
-        android:layout_marginHorizontal="16dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/Llpresion2">
-
-        <EditText
-            android:id="@+id/etpasdato2"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:gravity="center"
-            android:hint="0"
-            android:textSize="18sp"
-            android:textStyle="italic|bold"
-            android:inputType="numberDecimal"
-            android:maxWidth="6dp"/>
-
-        <EditText
-            android:id="@+id/etpaddato2"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:gravity="center"
-            android:hint="0"
-            android:textSize="18sp"
-            android:textStyle="italic|bold"
-            android:inputType="numberDecimal"
-            android:maxWidth="6dp"/>
-
-        <EditText
-            android:id="@+id/etfcdato2"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:gravity="center"
-            android:hint="0"
-            android:textSize="18sp"
-            android:textStyle="italic|bold"
-            android:inputType="numberDecimal"
-            android:maxWidth="6dp"/>
-    </LinearLayout>
-
-    <TextView
-        android:id="@+id/tvlectura3"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_margin="16dp"
-        android:text="LECTURA 3"
-        android:textSize="18sp"
-        android:textStyle="italic"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/Llpresiondatos2" />
-
-    <LinearLayout
-        android:id="@+id/Llpresion3"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="15dp"
-        android:layout_marginHorizontal="16dp"
-        android:orientation="horizontal"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/tvlectura3">
-
-        <TextView
-            android:id="@+id/tvpas3"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:gravity="center"
-            android:text="PAS"
-            android:textSize="18sp"
-            android:textStyle="italic|bold" />
-
-        <TextView
-            android:id="@+id/tvpad3"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:gravity="center"
-            android:text="PAD"
-            android:textSize="18sp"
-            android:textStyle="italic|bold" />
-
-        <TextView
-            android:id="@+id/tvfc3"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:gravity="center"
-            android:text="FC"
-            android:textSize="18sp"
-            android:textStyle="italic|bold" />
-
-
-    </LinearLayout>
-
-    <LinearLayout
-        android:id="@+id/Llpresiondatos3"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="15dp"
-        android:layout_marginHorizontal="16dp"
-        android:orientation="horizontal"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/Llpresion3">
-
-        <EditText
-            android:id="@+id/etpasdato3"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:gravity="center"
-            android:hint="0"
-            android:textSize="18sp"
-            android:textStyle="italic|bold"
-            android:inputType="numberDecimal"
-            android:maxWidth="6dp"/>
-
-        <EditText
-            android:id="@+id/etpaddato3"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:gravity="center"
-            android:hint="0"
-            android:textSize="18sp"
-            android:textStyle="italic|bold"
-            android:inputType="numberDecimal"
-            android:maxWidth="6dp"/>
-
-        <EditText
-            android:id="@+id/etfcdato3"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:gravity="center"
-            android:hint="0"
-            android:textSize="18sp"
-            android:textStyle="italic|bold"
-            android:inputType="numberDecimal"
-            android:maxWidth="6dp"/>
-    </LinearLayout>
+            <EditText
+                android:id="@+id/etfcdato3"
+                android:layout_width="wrap_content"
+                android:layout_height="48dp"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:hint="0"
+                android:textColorHint="@color/white"
+                android:textSize="18sp"
+                android:textStyle="italic|bold"
+                android:textColor="@color/white"
+                android:inputType="numberDecimal"
+                android:maxWidth="6dp"/>
+        </LinearLayout>
+    </androidx.cardview.widget.CardView>
 
     <Button
         android:id="@+id/btnguardardatos"
@@ -342,5 +394,6 @@
         app:layout_constraintEnd_toEndOf="parent"
         android:text="guardar"
         android:layout_marginHorizontal="22dp"/>
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>

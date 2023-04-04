@@ -52,7 +52,7 @@ class PresionArterialAdd : AppCompatActivity() {
             val newRegistro = PA_item_model(mediaPAS,mediaPAD,mediaPPP,currentdatetime)
             //y lo guardo en la bbdd a traves del viewmodel
             viewModel.addRegistro(newRegistro)
-            //vuelvo a la actividad principal
+            //vuelvo a la actividad que muestra los datos en el recyclerview
             startActivity(Intent(applicationContext, PresionArterialActivity::class.java))
             this.finish()
         }
