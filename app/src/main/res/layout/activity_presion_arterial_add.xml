@@ -103,43 +103,19 @@
                 android:id="@+id/etpasdato1"
                 android:layout_width="wrap_content"
                 android:layout_height="48dp"
-                android:layout_weight="1"
-                android:gravity="center"
-                android:hint="0"
-                android:textColorHint="@color/white"
-                android:textSize="18sp"
-                android:textStyle="italic|bold"
-                android:textColor="@color/white"
-                android:inputType="numberDecimal"
-                android:maxWidth="6dp"/>
+                style="@style/edit_text_style"/>
 
             <EditText
                 android:id="@+id/etpaddato1"
                 android:layout_width="wrap_content"
                 android:layout_height="48dp"
-                android:layout_weight="1"
-                android:gravity="center"
-                android:hint="0"
-                android:textColorHint="@color/white"
-                android:textSize="18sp"
-                android:textStyle="italic|bold"
-                android:textColor="@color/white"
-                android:inputType="numberDecimal"
-                android:maxWidth="6dp"/>
+                style="@style/edit_text_style"/>
 
             <EditText
                 android:id="@+id/etfcdato1"
                 android:layout_width="wrap_content"
                 android:layout_height="48dp"
-                android:layout_weight="1"
-                android:gravity="center"
-                android:hint="0"
-                android:textColorHint="@color/white"
-                android:textSize="18sp"
-                android:textStyle="italic|bold"
-                android:textColor="@color/white"
-                android:inputType="numberDecimal"
-                android:maxWidth="6dp"/>
+                style="@style/edit_text_style"/>
         </LinearLayout>
     </androidx.cardview.widget.CardView>
     <androidx.cardview.widget.CardView
@@ -224,43 +200,19 @@
                 android:id="@+id/etpasdato2"
                 android:layout_width="wrap_content"
                 android:layout_height="48dp"
-                android:layout_weight="1"
-                android:gravity="center"
-                android:hint="0"
-                android:textColorHint="@color/white"
-                android:textSize="18sp"
-                android:textStyle="italic|bold"
-                android:textColor="@color/white"
-                android:inputType="numberDecimal"
-                android:maxWidth="6dp"/>
+                style="@style/edit_text_style"/>
 
             <EditText
                 android:id="@+id/etpaddato2"
                 android:layout_width="wrap_content"
                 android:layout_height="48dp"
-                android:layout_weight="1"
-                android:gravity="center"
-                android:hint="0"
-                android:textColorHint="@color/white"
-                android:textSize="18sp"
-                android:textStyle="italic|bold"
-                android:textColor="@color/white"
-                android:inputType="numberDecimal"
-                android:maxWidth="6dp"/>
+                style="@style/edit_text_style"/>
 
             <EditText
                 android:id="@+id/etfcdato2"
                 android:layout_width="wrap_content"
                 android:layout_height="48dp"
-                android:layout_weight="1"
-                android:gravity="center"
-                android:hint="0"
-                android:textColorHint="@color/white"
-                android:textSize="18sp"
-                android:textStyle="italic|bold"
-                android:textColor="@color/white"
-                android:inputType="numberDecimal"
-                android:maxWidth="6dp"/>
+                style="@style/edit_text_style"/>
         </LinearLayout>
     </androidx.cardview.widget.CardView>
     <androidx.cardview.widget.CardView
@@ -345,43 +297,19 @@
                 android:id="@+id/etpasdato3"
                 android:layout_width="wrap_content"
                 android:layout_height="48dp"
-                android:layout_weight="1"
-                android:gravity="center"
-                android:hint="0"
-                android:textColorHint="@color/white"
-                android:textSize="18sp"
-                android:textStyle="italic|bold"
-                android:textColor="@color/white"
-                android:inputType="numberDecimal"
-                android:maxWidth="6dp"/>
+                style="@style/edit_text_style"/>
 
             <EditText
                 android:id="@+id/etpaddato3"
                 android:layout_width="wrap_content"
                 android:layout_height="48dp"
-                android:layout_weight="1"
-                android:gravity="center"
-                android:hint="0"
-                android:textColorHint="@color/white"
-                android:textSize="18sp"
-                android:textStyle="italic|bold"
-                android:textColor="@color/white"
-                android:inputType="numberDecimal"
-                android:maxWidth="6dp"/>
+                style="@style/edit_text_style"/>
 
             <EditText
                 android:id="@+id/etfcdato3"
                 android:layout_width="wrap_content"
                 android:layout_height="48dp"
-                android:layout_weight="1"
-                android:gravity="center"
-                android:hint="0"
-                android:textColorHint="@color/white"
-                android:textSize="18sp"
-                android:textStyle="italic|bold"
-                android:textColor="@color/white"
-                android:inputType="numberDecimal"
-                android:maxWidth="6dp"/>
+                style="@style/edit_text_style"/>
         </LinearLayout>
     </androidx.cardview.widget.CardView>
 
@@ -393,7 +321,8 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         android:text="guardar"
-        android:layout_marginHorizontal="22dp"/>
+        android:layout_marginHorizontal="30dp"
+        android:layout_marginBottom="10dp"/>
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
