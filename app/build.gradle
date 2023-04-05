@@ -58,4 +58,7 @@ dependencies {
     implementation("org.jetbrains.kotlinx:kotlinx-coroutines-android:1.3.9")
     implementation 'androidx.lifecycle:lifecycle-viewmodel-ktx:2.4.0'
     implementation 'androidx.lifecycle:lifecycle-livedata-ktx:2.4.0'
+    //para fotos circulares y para formas geometricas en layouts
+    implementation 'io.github.florent37:shapeofview:1.4.7'
+    implementation 'de.hdodenhof:circleimageview:3.1.0'
 }
