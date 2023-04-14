@@ -197,6 +197,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Activa el modo oscuro para un cambio visual"
+                    android:textColor="@color/white"
                     android:textSize="11sp" />
             </LinearLayout>
 

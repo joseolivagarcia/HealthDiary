@@ -15,6 +15,9 @@ class PARepositorio(val padao: PA_DAO) {
     //aqui recupero todos los registros que haya en la bbdd
     val listaPA_items: LiveData<List<PA_item_model>> = padao.getAllPA_items()
 
+    //aqui recupero solo los ultimos registros
+    val listaUltimosReg: LiveData<List<PA_item_model>> = padao.getLastPA_items()
+
     //y creo las funciones que usare para cada operacion
     suspend fun insertPA_items(paitem: PA_item_model){
         padao.insertPA_item(paitem)

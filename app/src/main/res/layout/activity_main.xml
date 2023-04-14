@@ -41,6 +41,7 @@
         android:gravity="center_vertical"
         android:orientation="horizontal">
         <TextView
+            android:id="@+id/tvnombre"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="José Oliva"
@@ -52,7 +53,7 @@
             android:layout_width="70dp"
             android:layout_height="70dp"
             android:src="@color/degradado1"
-            android:layout_marginStart="180dp"/>
+            android:layout_marginStart="170dp"/>
     </LinearLayout>
 
     <androidx.cardview.widget.CardView
@@ -92,8 +93,11 @@
             android:layout_height="90dp"
             app:cardCornerRadius="15dp"
             android:layout_weight="1"
-            android:layout_margin="5dp"
-            android:backgroundTint="@color/degradado1">
+            android:layout_margin="5dp">
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:src="@drawable/ic_profile"/>
         </androidx.cardview.widget.CardView>
         <androidx.cardview.widget.CardView
             android:id="@+id/btnpresionarterial"
@@ -101,37 +105,46 @@
             android:layout_height="90dp"
             app:cardCornerRadius="15dp"
             android:layout_weight="1"
-            android:layout_margin="5dp"
-            android:backgroundTint="@color/degradado1">
+            android:layout_margin="5dp">
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:src="@drawable/ic_health"/>
         </androidx.cardview.widget.CardView>
         <androidx.cardview.widget.CardView
-            android:id="@+id/cvmenunotas"
+            android:id="@+id/btnmenunotas"
             android:layout_width="90dp"
             android:layout_height="90dp"
             app:cardCornerRadius="15dp"
             android:layout_weight="1"
-            android:layout_margin="5dp"
-            android:backgroundTint="@color/degradado1">
+            android:layout_margin="5dp">
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:src="@drawable/ic_notas"/>
         </androidx.cardview.widget.CardView>
         <androidx.cardview.widget.CardView
-            android:id="@+id/cvmenudatos"
+            android:id="@+id/btninfo"
             android:layout_width="90dp"
             android:layout_height="90dp"
             app:cardCornerRadius="15dp"
             android:layout_weight="1"
-            android:layout_margin="5dp"
-            android:backgroundTint="@color/degradado1">
+            android:layout_margin="5dp">
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:src="@drawable/ic_info"/>
         </androidx.cardview.widget.CardView>
     </LinearLayout>
 
     <TextView
-        android:id="@+id/tvnotas"
+        android:id="@+id/tvregistros"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:layout_constraintTop_toBottomOf="@id/llmenus"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        android:text="Últimas Notas"
+        android:text="Últimos Registros"
         android:textSize="18sp"
         android:textStyle="bold"
         android:textColor="@color/black"
@@ -139,9 +152,10 @@
         android:layout_marginHorizontal="16dp"/>
 
     <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rvregistros"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:layout_constraintTop_toBottomOf="@id/tvnotas"
+        app:layout_constraintTop_toBottomOf="@id/tvregistros"
         android:layout_margin="16dp">
 
     </androidx.recyclerview.widget.RecyclerView>

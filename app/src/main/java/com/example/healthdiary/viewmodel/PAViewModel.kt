@@ -17,6 +17,7 @@ class PAViewModel(aplication: Application): AndroidViewModel(aplication) {
     Daran error hasta que las inicialicemos
      */
     val listaregistros: LiveData<List<PA_item_model>>
+    val listaUltimosReg: LiveData<List<PA_item_model>>
     val repositorio: PARepositorio
     init{
         /* el dao lo obtengo desde la clase PADatabase llamando a la fun getDatabase
@@ -28,6 +29,7 @@ class PAViewModel(aplication: Application): AndroidViewModel(aplication) {
         repositorio = PARepositorio(dao)
         //y obtengo todos los registros en la var que creé arriba
         listaregistros = repositorio.listaPA_items
+        listaUltimosReg = repositorio.listaUltimosReg
     }
     /*
      Me creo las funciones para insertat,borrar o editar registros. LLamare a las funciones que

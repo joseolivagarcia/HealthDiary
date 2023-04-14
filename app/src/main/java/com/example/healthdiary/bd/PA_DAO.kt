@@ -8,8 +8,13 @@ import com.example.healthdiary.models.PA_item_model
 @Dao
 interface PA_DAO {
     //query para obtener todas los registros ordenados por id
-    @Query("Select * from table_PA Order By id Asc")
+    @Query("Select * from table_PA Order By id Desc")
     fun getAllPA_items(): LiveData<List<PA_item_model>>
+
+    //query para obtener los ultimos registros limitados a 3
+    @Query("select * from table_PA Order By fecha Desc Limit 3")
+    fun getLastPA_items(): LiveData<List<PA_item_model>>
+
 
     //operaciones de insertar,borrar y actualizar, son suspend fun porque se ejecutan fuera del hilo ppal
     @Insert
