@@ -5,6 +5,7 @@ import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.viewModelScope
 import com.example.healthdiary.bd.PADatabase
+import com.example.healthdiary.models.Nota_item_model
 import com.example.healthdiary.models.PA_item_model
 import com.example.healthdiary.repositorio.PARepositorio
 import kotlinx.coroutines.Dispatchers
@@ -18,6 +19,7 @@ class PAViewModel(aplication: Application): AndroidViewModel(aplication) {
      */
     val listaregistros: LiveData<List<PA_item_model>>
     val listaUltimosReg: LiveData<List<PA_item_model>>
+    val listaNotas: LiveData<List<Nota_item_model>>
     val repositorio: PARepositorio
     init{
         /* el dao lo obtengo desde la clase PADatabase llamando a la fun getDatabase
@@ -30,6 +32,7 @@ class PAViewModel(aplication: Application): AndroidViewModel(aplication) {
         //y obtengo todos los registros en la var que creé arriba
         listaregistros = repositorio.listaPA_items
         listaUltimosReg = repositorio.listaUltimosReg
+        listaNotas = repositorio.listaNotas
     }
     /*
      Me creo las funciones para insertat,borrar o editar registros. LLamare a las funciones que
@@ -44,5 +47,9 @@ class PAViewModel(aplication: Application): AndroidViewModel(aplication) {
     }
     fun updateRegistro(paitem: PA_item_model) = viewModelScope.launch(Dispatchers.IO) {
         repositorio.updatePA_items(paitem)
+    }
+
+    fun deleteNota(notaitem: Nota_item_model) = viewModelScope.launch (Dispatchers.IO){
+        repositorio.deleteNota(notaitem)
     }
 }

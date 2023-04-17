@@ -156,7 +156,8 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:layout_constraintTop_toBottomOf="@id/tvregistros"
-        android:layout_margin="16dp">
+        android:layout_margin="16dp"
+        tools:listitem="@layout/presion_rv_item">
 
     </androidx.recyclerview.widget.RecyclerView>
 

@@ -4,11 +4,12 @@ import android.content.Context
 import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
+import com.example.healthdiary.models.Nota_item_model
 import com.example.healthdiary.models.PA_item_model
 
 //La clase para la base de datos debe ser abstracta y hereda de Room
 @Database(
-    entities = arrayOf(PA_item_model::class),
+    entities = arrayOf(PA_item_model::class,Nota_item_model::class),
     version = 1
 )
 abstract class PADatabase: RoomDatabase() {

@@ -2,6 +2,7 @@ package com.example.healthdiary.bd
 
 import androidx.lifecycle.LiveData
 import androidx.room.*
+import com.example.healthdiary.models.Nota_item_model
 import com.example.healthdiary.models.PA_item_model
 
 //en el DAO tendremos las querys para operar con la bbdd
@@ -15,6 +16,10 @@ interface PA_DAO {
     @Query("select * from table_PA Order By fecha Desc Limit 3")
     fun getLastPA_items(): LiveData<List<PA_item_model>>
 
+    //query para obtener todas las notas
+    @Query("Select * from table_Notas Order By id Desc")
+    fun getAllNotas(): LiveData<List<Nota_item_model>>
+
 
     //operaciones de insertar,borrar y actualizar, son suspend fun porque se ejecutan fuera del hilo ppal
     @Insert
@@ -23,4 +28,8 @@ interface PA_DAO {
     suspend fun deletePA_item(pa_item: PA_item_model)
     @Update
     suspend fun updatePA_item(pa_item: PA_item_model)
+
+    //para borrar nota
+    @Delete
+    suspend fun deleteNota(nota_item: Nota_item_model)
 }

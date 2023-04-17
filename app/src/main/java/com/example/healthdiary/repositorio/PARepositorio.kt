@@ -2,6 +2,7 @@ package com.example.healthdiary.repositorio
 
 import androidx.lifecycle.LiveData
 import com.example.healthdiary.bd.PA_DAO
+import com.example.healthdiary.models.Nota_item_model
 import com.example.healthdiary.models.PA_item_model
 /*
 El repositorio es una clase desde la que se decide de donde
@@ -18,6 +19,9 @@ class PARepositorio(val padao: PA_DAO) {
     //aqui recupero solo los ultimos registros
     val listaUltimosReg: LiveData<List<PA_item_model>> = padao.getLastPA_items()
 
+    //aqui recupero todas las notas
+    val listaNotas: LiveData<List<Nota_item_model>> = padao.getAllNotas()
+
     //y creo las funciones que usare para cada operacion
     suspend fun insertPA_items(paitem: PA_item_model){
         padao.insertPA_item(paitem)
@@ -27,5 +31,9 @@ class PARepositorio(val padao: PA_DAO) {
     }
     suspend fun updatePA_items(paitem: PA_item_model){
         padao.updatePA_item(paitem)
+    }
+
+    suspend fun deleteNota(notaitem: Nota_item_model){
+        padao.deleteNota(notaitem)
     }
 }

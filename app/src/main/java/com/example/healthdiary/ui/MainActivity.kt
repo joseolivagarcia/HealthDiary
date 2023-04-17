@@ -83,6 +83,11 @@ class MainActivity : AppCompatActivity() {
             startActivity(intent)
         }
 
+        binding.btnmenunotas.setOnClickListener {
+            val intent = Intent(this,NotasActivity::class.java)
+            startActivity(intent)
+        }
+
     }
 
     private fun initUI() {

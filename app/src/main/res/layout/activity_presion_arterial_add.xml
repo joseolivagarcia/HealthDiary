@@ -103,19 +103,25 @@
                 android:id="@+id/etpasdato1"
                 android:layout_width="wrap_content"
                 android:layout_height="48dp"
-                style="@style/edit_text_style"/>
+                style="@style/edit_text_style"
+                android:maxLength="3"
+                android:inputType="number"/>
 
             <EditText
                 android:id="@+id/etpaddato1"
                 android:layout_width="wrap_content"
                 android:layout_height="48dp"
-                style="@style/edit_text_style"/>
+                style="@style/edit_text_style"
+                android:maxLength="3"
+                android:inputType="number"/>
 
             <EditText
                 android:id="@+id/etfcdato1"
                 android:layout_width="wrap_content"
                 android:layout_height="48dp"
-                style="@style/edit_text_style"/>
+                style="@style/edit_text_style"
+                android:maxLength="3"
+                android:inputType="number"/>
         </LinearLayout>
     </androidx.cardview.widget.CardView>
     <androidx.cardview.widget.CardView
@@ -200,19 +206,25 @@
                 android:id="@+id/etpasdato2"
                 android:layout_width="wrap_content"
                 android:layout_height="48dp"
-                style="@style/edit_text_style"/>
+                style="@style/edit_text_style"
+                android:maxLength="3"
+                android:inputType="number"/>
 
             <EditText
                 android:id="@+id/etpaddato2"
                 android:layout_width="wrap_content"
                 android:layout_height="48dp"
-                style="@style/edit_text_style"/>
+                style="@style/edit_text_style"
+                android:maxLength="3"
+                android:inputType="number"/>
 
             <EditText
                 android:id="@+id/etfcdato2"
                 android:layout_width="wrap_content"
                 android:layout_height="48dp"
-                style="@style/edit_text_style"/>
+                style="@style/edit_text_style"
+                android:maxLength="3"
+                android:inputType="number"/>
         </LinearLayout>
     </androidx.cardview.widget.CardView>
     <androidx.cardview.widget.CardView
@@ -297,19 +309,25 @@
                 android:id="@+id/etpasdato3"
                 android:layout_width="wrap_content"
                 android:layout_height="48dp"
-                style="@style/edit_text_style"/>
+                style="@style/edit_text_style"
+                android:maxLength="3"
+                android:inputType="number"/>
 
             <EditText
                 android:id="@+id/etpaddato3"
                 android:layout_width="wrap_content"
                 android:layout_height="48dp"
-                style="@style/edit_text_style"/>
+                style="@style/edit_text_style"
+                android:maxLength="3"
+                android:inputType="number"/>
 
             <EditText
                 android:id="@+id/etfcdato3"
                 android:layout_width="wrap_content"
                 android:layout_height="48dp"
-                style="@style/edit_text_style"/>
+                style="@style/edit_text_style"
+                android:maxLength="3"
+                android:inputType="number"/>
         </LinearLayout>
     </androidx.cardview.widget.CardView>
 
@@ -322,7 +340,8 @@
         app:layout_constraintEnd_toEndOf="parent"
         android:text="guardar"
         android:layout_marginHorizontal="30dp"
-        android:layout_marginBottom="10dp"/>
+        android:layout_marginBottom="10dp"
+        android:backgroundTint="@color/degradado1"/>
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
