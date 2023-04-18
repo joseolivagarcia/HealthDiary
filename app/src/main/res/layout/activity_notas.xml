@@ -9,7 +9,7 @@
     <LinearLayout
         android:id="@+id/Llnotas"
         android:layout_width="match_parent"
-        android:layout_height="100dp"
+        android:layout_height="wrap_content"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -23,11 +23,11 @@
         <EditText
             android:id="@+id/etnota"
             android:layout_width="match_parent"
-            android:layout_height="48dp"
+            android:layout_height="70dp"
             android:layout_marginLeft="5dp"
             android:hint="Escribe una nota"
             android:maxLines="2"
-            android:maxLength="150"/>
+            android:maxLength="56"/>
     </LinearLayout>
     <Button
         android:id="@+id/btnaddnota"

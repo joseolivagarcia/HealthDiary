@@ -51,6 +51,7 @@ class NotasActivity : AppCompatActivity() {
             val nota = binding.etnota.text.toString()
             val newNota = Nota_item_model(nota)
             viewModel.addNota(newNota)
+            binding.etnota.setText("")
 
         }
     }

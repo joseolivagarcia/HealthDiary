@@ -21,7 +21,7 @@ interface PA_DAO {
     fun getAllNotas(): LiveData<List<Nota_item_model>>
 
     //query para coger las ultimas notas
-    @Query("Select * from table_Notas Order by id Desc Limit 3")
+    @Query("Select * from table_Notas Order by id Desc Limit 4")
     fun getLastNotas(): LiveData<List<Nota_item_model>>
 
 
