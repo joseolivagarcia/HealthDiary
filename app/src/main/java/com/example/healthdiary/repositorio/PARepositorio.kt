@@ -22,6 +22,9 @@ class PARepositorio(val padao: PA_DAO) {
     //aqui recupero todas las notas
     val listaNotas: LiveData<List<Nota_item_model>> = padao.getAllNotas()
 
+    //aqui cojo solo las ultimas notas
+    val listaUltNotas: LiveData<List<Nota_item_model>> = padao.getLastNotas()
+
     //y creo las funciones que usare para cada operacion
     suspend fun insertPA_items(paitem: PA_item_model){
         padao.insertPA_item(paitem)
@@ -31,6 +34,10 @@ class PARepositorio(val padao: PA_DAO) {
     }
     suspend fun updatePA_items(paitem: PA_item_model){
         padao.updatePA_item(paitem)
+    }
+
+    suspend fun insertNota(notaitem: Nota_item_model){
+        padao.insertNota(notaitem)
     }
 
     suspend fun deleteNota(notaitem: Nota_item_model){

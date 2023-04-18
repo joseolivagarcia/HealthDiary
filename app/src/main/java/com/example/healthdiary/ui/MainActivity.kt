@@ -9,8 +9,10 @@ import androidx.datastore.preferences.core.floatPreferencesKey
 import androidx.datastore.preferences.core.intPreferencesKey
 import androidx.datastore.preferences.core.stringPreferencesKey
 import androidx.lifecycle.ViewModelProvider
+import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.example.healthdiary.adapter.NotasAdapter
 import com.example.healthdiary.adapter.RegistroPAAdapter
 import com.example.healthdiary.databinding.ActivityMainBinding
 import com.example.healthdiary.models.PA_item_model
@@ -28,6 +30,7 @@ class MainActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMainBinding
     lateinit var viewModel: PAViewModel
     lateinit var recyclerViewLastReg: RecyclerView
+    lateinit var recyclerviewLastNotas: RecyclerView
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -49,11 +52,12 @@ class MainActivity : AppCompatActivity() {
             }
         }
 
+        //recycler para los ultimos registros
         recyclerViewLastReg = binding.rvregistros
         recyclerViewLastReg.layoutManager =
             LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false)
         val registrosAdapter =
-            RegistroPAAdapter(onClickDelete = { registro -> onDeleteItem(registro) })
+            RegistroPAAdapter(onClickDelete = { registro -> onDeleteItem() })
         //ponemos el adapter creado al recyclerview
         recyclerViewLastReg.adapter = registrosAdapter
         viewModel = ViewModelProvider(
@@ -68,6 +72,19 @@ class MainActivity : AppCompatActivity() {
                 registrosAdapter.updateList(it)
             }
         })
+
+        //recycler para las ultimas notas
+        recyclerviewLastNotas = binding.rvrnotas
+        recyclerviewLastNotas.layoutManager = GridLayoutManager(this,2)
+        val notasAdaapter = NotasAdapter(onClickDelete = {nota -> onDeleteItem()})
+        recyclerviewLastNotas.adapter = notasAdaapter
+        viewModel.listaUltimasNotas.observe(this,{list ->
+            list?.let{
+                notasAdaapter.updateList(it)
+            }
+        })
+
+
         initUI()
         initListener()
     }
@@ -94,7 +111,7 @@ class MainActivity : AppCompatActivity() {
 
     }
 
-    private fun onDeleteItem(registro: PA_item_model) {
+    private fun onDeleteItem() {
         //en esta activity no me interesa que pueda borrar los registros
     }
 

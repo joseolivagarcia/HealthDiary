@@ -20,6 +20,10 @@ interface PA_DAO {
     @Query("Select * from table_Notas Order By id Desc")
     fun getAllNotas(): LiveData<List<Nota_item_model>>
 
+    //query para coger las ultimas notas
+    @Query("Select * from table_Notas Order by id Desc Limit 3")
+    fun getLastNotas(): LiveData<List<Nota_item_model>>
+
 
     //operaciones de insertar,borrar y actualizar, son suspend fun porque se ejecutan fuera del hilo ppal
     @Insert
@@ -29,6 +33,9 @@ interface PA_DAO {
     @Update
     suspend fun updatePA_item(pa_item: PA_item_model)
 
+    //para insertar nota
+    @Insert
+    suspend fun insertNota(notaitem: Nota_item_model)
     //para borrar nota
     @Delete
     suspend fun deleteNota(nota_item: Nota_item_model)
