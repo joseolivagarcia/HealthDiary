@@ -1,9 +1,17 @@
 package com.example.healthdiary.ui
 
+import android.Manifest
+import android.annotation.SuppressLint
+import android.content.ContentValues.TAG
+import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
+import android.location.Location
+import android.location.LocationManager
 import android.os.Bundle
+import android.os.Looper
 import android.util.Log
+import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
@@ -21,12 +29,13 @@ import com.example.healthdiary.adapter.RegistroPAAdapter
 import com.example.healthdiary.databinding.ActivityMainBinding
 import com.example.healthdiary.models.SettingsModel
 import com.example.healthdiary.viewmodel.PAViewModel
-import com.google.android.gms.location.FusedLocationProviderClient
+import com.google.android.gms.location.*
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.launch
+import java.util.concurrent.TimeUnit
 
 class MainActivity : AppCompatActivity() {
 
@@ -36,15 +45,14 @@ class MainActivity : AppCompatActivity() {
     lateinit var recyclerviewLastNotas: RecyclerView
 
     //variables para la geolocalizacion
-    companion object{
-        const val REQUEST_CODE: Int = 1
-    }
-    lateinit var fusedLocationProviderClient: FusedLocationProviderClient
+    private lateinit var fusedLocationProviderClient: FusedLocationProviderClient
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
+
+        fusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(this)
 
         /*
         * antes de inicializar la UI me tengo que enganchar al flow para que recupere los datos (settings)
@@ -61,7 +69,7 @@ class MainActivity : AppCompatActivity() {
             }
         }
 
-        enableLocation() //este metodo se llama para saber si tenemos permisos de ubicacion
+        getCurrentLocation() //este metodo se llama para saber si tenemos permisos de ubicacion
         initUI()
         initListener()
     }
@@ -70,60 +78,95 @@ class MainActivity : AppCompatActivity() {
     * con esta funcion comprobamos si los permisos estan dados o no.
     * Si estan dados hacemos una cosa y si no tendremos que pedirlos
     * */
-    private fun isLocationPermissionGranted() = ContextCompat.checkSelfPermission(
-        this,
-        android.Manifest.permission.ACCESS_FINE_LOCATION
-        ) == PackageManager.PERMISSION_GRANTED
 
-    private fun enableLocation(){
-        if (isLocationPermissionGranted()){
-            //si hemos aceptado los permisos
-            Log.i("mapa","hemos aceptado los permisos")
-            getLocation()
-        }else{
-            //si no hemos aceptado los permisos, los pedimos en la siguiente funcion
-            requestLocationPermission()
+    private fun getCurrentLocation() {
+
+        if (checkPermissions()){
+            if (isLocationEnable()){
+                //final latitud y longitud code here
+                if (ActivityCompat.checkSelfPermission(
+                        this,
+                        Manifest.permission.ACCESS_FINE_LOCATION
+                    ) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(
+                        this,
+                        Manifest.permission.ACCESS_COARSE_LOCATION
+                    ) != PackageManager.PERMISSION_GRANTED
+                ) {
+                    requestPermission()
+                    return
+                }
+                fusedLocationProviderClient.lastLocation.addOnCompleteListener(this){ task ->
+                    val location: Location? = task.result
+                    if(location == null){
+                        Toast.makeText(this,"Null received",Toast.LENGTH_SHORT).show()
+                    }else{
+                        Toast.makeText(this,"Get Success",Toast.LENGTH_SHORT).show()
+                        val latitud = location.latitude
+                        val longitud = location.longitude
+                        binding.tvlocation.text = "${latitud} / $longitud"
+                    }
+                }
+
+            }
+            else{
+                //setting open here
+                Toast.makeText(this,"Activa la localizacion",Toast.LENGTH_SHORT).show()
+                val intent = Intent(android.provider.Settings.ACTION_LOCATION_SOURCE_SETTINGS)
+                startActivity(intent)
+            }
+        }
+        else{
+            //request permission here
+            requestPermission()
         }
     }
 
-    private fun requestLocationPermission(){
-        if(ActivityCompat.shouldShowRequestPermissionRationale(this,android.Manifest.permission.ACCESS_FINE_LOCATION)){
-            Toast.makeText(this,"ve a ajustes y acepta los permisos de localización para una experiencia completa ",Toast.LENGTH_SHORT).show()
-
-        }else{
-
-            ActivityCompat.requestPermissions(this, arrayOf(android.Manifest.permission.ACCESS_FINE_LOCATION),REQUEST_CODE)
-        }
+    private fun isLocationEnable(): Boolean{
+        val locationManager: LocationManager = getSystemService(Context.LOCATION_SERVICE) as LocationManager
+        return locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER) ||
+                locationManager.isProviderEnabled(LocationManager.NETWORK_PROVIDER)
     }
 
-    //sobreescribimos el metodo que nos da la respuesta a si tenemos permisos o no
+    private fun requestPermission() {
+        ActivityCompat.requestPermissions(
+            this, arrayOf(android.Manifest.permission.ACCESS_COARSE_LOCATION,
+                android.Manifest.permission.ACCESS_FINE_LOCATION),
+            PERMISSION_REQUEST_ACCESS_LOCATION
+        )
+    }
+
+    companion object{
+        private const val PERMISSION_REQUEST_ACCESS_LOCATION = 100
+    }
+
+    private fun checkPermissions(): Boolean{
+        if(ActivityCompat.checkSelfPermission(this,
+                android.Manifest.permission.ACCESS_COARSE_LOCATION)
+            ==PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this,
+                android.Manifest.permission.ACCESS_FINE_LOCATION)==PackageManager.PERMISSION_GRANTED)
+        {
+            return true
+        }
+
+        return false
+    }
+
     override fun onRequestPermissionsResult(
         requestCode: Int,
         permissions: Array<out String>,
         grantResults: IntArray
     ) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults)
-        when(requestCode){
-            REQUEST_CODE -> if(grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED){
-            getLocation()
-            }else{
-                Toast.makeText(this,"Para activar la localizacion ve a ajustes y acepta los permisos",Toast.LENGTH_SHORT).show()
+
+        if(requestCode == PERMISSION_REQUEST_ACCESS_LOCATION){
+            if(grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED){
+                Toast.makeText(applicationContext,"GRANTED", Toast.LENGTH_SHORT).show()
+                getCurrentLocation()
             }
-            else -> {}
+            else{
+                Toast.makeText(applicationContext,"DENIED", Toast.LENGTH_SHORT).show()
+            }
         }
-    }
-
-    /*//sobreescribimos este metodo por si cambiamos de app y volvemos a esta y hemos cambiado los permisos
-    override fun onTopResumedActivityChanged(isTopResumedActivity: Boolean) {
-        super.onTopResumedActivityChanged(isTopResumedActivity)
-        if(!isLocationPermissionGranted()){
-            Toast.makeText(this,"Para activar la localizacion ve a ajustes y acepta los permisos",Toast.LENGTH_SHORT).show()
-        }
-    }*/
-
-    private fun getLocation() {
-        binding.tvlocation.text = "Boadilla del Monte"
-        Toast.makeText(this,"Localizacion Activada",Toast.LENGTH_SHORT).show()
     }
 
 
