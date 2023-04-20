@@ -62,4 +62,6 @@ dependencies {
     //para fotos circulares y para formas geometricas en layouts
     implementation 'io.github.florent37:shapeofview:1.4.7'
     implementation 'de.hdodenhof:circleimageview:3.1.0'
+    //para la geolocalizacion
+    implementation 'com.google.android.gms:play-services-location:21.0.1'
 }

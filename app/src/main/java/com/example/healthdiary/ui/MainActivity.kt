@@ -1,9 +1,13 @@
 package com.example.healthdiary.ui
 
 import android.content.Intent
-import androidx.appcompat.app.AppCompatActivity
+import android.content.pm.PackageManager
 import android.os.Bundle
-import androidx.appcompat.app.AlertDialog
+import android.util.Log
+import android.widget.Toast
+import androidx.appcompat.app.AppCompatActivity
+import androidx.core.app.ActivityCompat
+import androidx.core.content.ContextCompat
 import androidx.datastore.preferences.core.booleanPreferencesKey
 import androidx.datastore.preferences.core.floatPreferencesKey
 import androidx.datastore.preferences.core.intPreferencesKey
@@ -15,13 +19,12 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.healthdiary.adapter.NotasAdapter
 import com.example.healthdiary.adapter.RegistroPAAdapter
 import com.example.healthdiary.databinding.ActivityMainBinding
-import com.example.healthdiary.models.PA_item_model
 import com.example.healthdiary.models.SettingsModel
 import com.example.healthdiary.viewmodel.PAViewModel
+import com.google.android.gms.location.FusedLocationProviderClient
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.filter
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.launch
 
@@ -31,6 +34,12 @@ class MainActivity : AppCompatActivity() {
     lateinit var viewModel: PAViewModel
     lateinit var recyclerViewLastReg: RecyclerView
     lateinit var recyclerviewLastNotas: RecyclerView
+
+    //variables para la geolocalizacion
+    companion object{
+        const val REQUEST_CODE: Int = 1
+    }
+    lateinit var fusedLocationProviderClient: FusedLocationProviderClient
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -51,6 +60,92 @@ class MainActivity : AppCompatActivity() {
                 }
             }
         }
+
+        enableLocation() //este metodo se llama para saber si tenemos permisos de ubicacion
+        initUI()
+        initListener()
+    }
+
+    /*
+    * con esta funcion comprobamos si los permisos estan dados o no.
+    * Si estan dados hacemos una cosa y si no tendremos que pedirlos
+    * */
+    private fun isLocationPermissionGranted() = ContextCompat.checkSelfPermission(
+        this,
+        android.Manifest.permission.ACCESS_FINE_LOCATION
+        ) == PackageManager.PERMISSION_GRANTED
+
+    private fun enableLocation(){
+        if (isLocationPermissionGranted()){
+            //si hemos aceptado los permisos
+            Log.i("mapa","hemos aceptado los permisos")
+            getLocation()
+        }else{
+            //si no hemos aceptado los permisos, los pedimos en la siguiente funcion
+            requestLocationPermission()
+        }
+    }
+
+    private fun requestLocationPermission(){
+        if(ActivityCompat.shouldShowRequestPermissionRationale(this,android.Manifest.permission.ACCESS_FINE_LOCATION)){
+            Toast.makeText(this,"ve a ajustes y acepta los permisos de localización para una experiencia completa ",Toast.LENGTH_SHORT).show()
+
+        }else{
+
+            ActivityCompat.requestPermissions(this, arrayOf(android.Manifest.permission.ACCESS_FINE_LOCATION),REQUEST_CODE)
+        }
+    }
+
+    //sobreescribimos el metodo que nos da la respuesta a si tenemos permisos o no
+    override fun onRequestPermissionsResult(
+        requestCode: Int,
+        permissions: Array<out String>,
+        grantResults: IntArray
+    ) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults)
+        when(requestCode){
+            REQUEST_CODE -> if(grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED){
+            getLocation()
+            }else{
+                Toast.makeText(this,"Para activar la localizacion ve a ajustes y acepta los permisos",Toast.LENGTH_SHORT).show()
+            }
+            else -> {}
+        }
+    }
+
+    /*//sobreescribimos este metodo por si cambiamos de app y volvemos a esta y hemos cambiado los permisos
+    override fun onTopResumedActivityChanged(isTopResumedActivity: Boolean) {
+        super.onTopResumedActivityChanged(isTopResumedActivity)
+        if(!isLocationPermissionGranted()){
+            Toast.makeText(this,"Para activar la localizacion ve a ajustes y acepta los permisos",Toast.LENGTH_SHORT).show()
+        }
+    }*/
+
+    private fun getLocation() {
+        binding.tvlocation.text = "Boadilla del Monte"
+        Toast.makeText(this,"Localizacion Activada",Toast.LENGTH_SHORT).show()
+    }
+
+
+    private fun initListener() {
+        binding.btnperfil.setOnClickListener {
+            val intent = Intent(this, Perfil::class.java)
+            startActivity(intent)
+        }
+
+        binding.btnpresionarterial.setOnClickListener {
+            val intent = Intent(this, PresionArterialActivity::class.java)
+            startActivity(intent)
+        }
+
+        binding.btnmenunotas.setOnClickListener {
+            val intent = Intent(this,NotasActivity::class.java)
+            startActivity(intent)
+        }
+
+    }
+
+    private fun initUI() {
 
         //recycler para los ultimos registros
         recyclerViewLastReg = binding.rvregistros
@@ -83,31 +178,6 @@ class MainActivity : AppCompatActivity() {
                 notasAdaapter.updateList(it)
             }
         })
-
-
-        initUI()
-        initListener()
-    }
-
-    private fun initListener() {
-        binding.btnperfil.setOnClickListener {
-            val intent = Intent(this, Perfil::class.java)
-            startActivity(intent)
-        }
-
-        binding.btnpresionarterial.setOnClickListener {
-            val intent = Intent(this, PresionArterialActivity::class.java)
-            startActivity(intent)
-        }
-
-        binding.btnmenunotas.setOnClickListener {
-            val intent = Intent(this,NotasActivity::class.java)
-            startActivity(intent)
-        }
-
-    }
-
-    private fun initUI() {
 
     }
 
