@@ -26,6 +26,8 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.healthdiary.adapter.NotasAdapter
 import com.example.healthdiary.adapter.RegistroPAAdapter
+import com.example.healthdiary.bd.ApiServices
+import com.example.healthdiary.bd.MeteoDataResponse
 import com.example.healthdiary.databinding.ActivityMainBinding
 import com.example.healthdiary.models.SettingsModel
 import com.example.healthdiary.viewmodel.PAViewModel
@@ -35,6 +37,8 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.launch
+import retrofit2.Retrofit
+import retrofit2.converter.gson.GsonConverterFactory
 import java.util.concurrent.TimeUnit
 
 class MainActivity : AppCompatActivity() {
@@ -46,16 +50,25 @@ class MainActivity : AppCompatActivity() {
 
     //variables para la geolocalizacion
     private lateinit var fusedLocationProviderClient: FusedLocationProviderClient
+    private var latitud:Double = 0.0
+    private var longitud:Double = 0.0
+    companion object{
+        private const val PERMISSION_REQUEST_ACCESS_LOCATION = 100
+    }
+    //variable para poder usar retrofit
+    private lateinit var retrofit: Retrofit
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
+        //variable para usar los servicios de geolocalizacion
         fusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(this)
-
+        //inicializo la var retrofit llamando a la funcion que crea un objeto de retrofit
+        retrofit = getRetrofit()
         /*
-        * antes de inicializar la UI me tengo que enganchar al flow para que recupere los datos (settings)
+        * antes de inicializar la UI me tengo que enganchar al flow para que recupere los datos (settings) del datastore
         * que esten guardados o coja los que se crean por defecto. Esto logicamente hay que hacerlo en
         * una corutina. El collect es lo que hace que nos enganchemos al flow y estemos siempre escuchando*/
         CoroutineScope(Dispatchers.IO).launch {
@@ -101,9 +114,11 @@ class MainActivity : AppCompatActivity() {
                         Toast.makeText(this,"Null received",Toast.LENGTH_SHORT).show()
                     }else{
                         Toast.makeText(this,"Get Success",Toast.LENGTH_SHORT).show()
-                        val latitud = location.latitude
-                        val longitud = location.longitude
-                        binding.tvlocation.text = "${latitud} / $longitud"
+                        latitud = location.latitude
+                        longitud = location.longitude
+                        //llamo a la funcion que recoge los datos del tiempo de la API y le paso la lat y lon
+                        getMeteo(latitud,longitud)
+                        //binding.tvlocation.text = "$latitud / $longitud"
                     }
                 }
 
@@ -130,20 +145,18 @@ class MainActivity : AppCompatActivity() {
     private fun requestPermission() {
         ActivityCompat.requestPermissions(
             this, arrayOf(android.Manifest.permission.ACCESS_COARSE_LOCATION,
-                android.Manifest.permission.ACCESS_FINE_LOCATION),
+                Manifest.permission.ACCESS_FINE_LOCATION),
             PERMISSION_REQUEST_ACCESS_LOCATION
         )
     }
 
-    companion object{
-        private const val PERMISSION_REQUEST_ACCESS_LOCATION = 100
-    }
+
 
     private fun checkPermissions(): Boolean{
         if(ActivityCompat.checkSelfPermission(this,
                 android.Manifest.permission.ACCESS_COARSE_LOCATION)
             ==PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this,
-                android.Manifest.permission.ACCESS_FINE_LOCATION)==PackageManager.PERMISSION_GRANTED)
+                Manifest.permission.ACCESS_FINE_LOCATION)==PackageManager.PERMISSION_GRANTED)
         {
             return true
         }
@@ -151,6 +164,7 @@ class MainActivity : AppCompatActivity() {
         return false
     }
 
+    //hay que sobreescribir este metodo que es el que analiza el resultado obtenido de si tenemos permisos o no
     override fun onRequestPermissionsResult(
         requestCode: Int,
         permissions: Array<out String>,
@@ -165,6 +179,47 @@ class MainActivity : AppCompatActivity() {
             }
             else{
                 Toast.makeText(applicationContext,"DENIED", Toast.LENGTH_SHORT).show()
+            }
+        }
+    }
+
+    //esta funcion devuelve un objeto de tipo Retrofit
+    private fun getRetrofit(): Retrofit {
+        //guardamos en una var el objeto Retrofit con su url correspondiente y las opciones para convertir el json
+        val retrofit = Retrofit.Builder()
+            .baseUrl("https://api.weatherbit.io/v2.0/")
+            .addConverterFactory(GsonConverterFactory.create())
+            .build()
+
+        return retrofit
+    }
+
+    //esta es la funcion que va a llamar a la API a traves de retrofit
+    private fun getMeteo(lat: Double, lon: Double){
+        Log.d("meteo", "$lat / $lon")
+        //hacemos la llamada al retrofit (con la corutina)
+        //el dispatchers especifica el hilo en donde queremos ejecutar, en este caso un hilo secundario
+        CoroutineScope(Dispatchers.IO).launch {
+            //guardamos en una var la llamada a nuestra Apiservice y a la funcion necesaria a la que pasamos los datos de localizacion
+            val myResponse = retrofit.create(ApiServices::class.java).getMeteo(latitud,longitud)
+            if(myResponse.isSuccessful){
+                Log.i("retro","FUNCIONA!!!")
+                //ahora en una val guardo lo que traiga la respuesta a traves del .body()
+                val response: MeteoDataResponse? = myResponse.body() //tener en cuenta que MeteoDataResponse puede ser nulo
+                if(response != null){
+                    //Log.i("datosmeteo","${response.meteoData[0].meteoCity}")
+                    //como voy a modificar la UI lo tengo que hacer en un hilo ppal y no en este que es secundario
+                    runOnUiThread {
+                        binding.tvlocation.text = response.meteoData[0].meteoCity //pongo la ciudad que me devuelva la api
+                        binding.tvtemp.text = response.meteoData[0].meteoTemp.toString() //pongo la temp que devuelva la api
+                    }
+                }
+                else{
+                    //Log.i("datosmeteo","no tengo datos")
+                }
+            }else{
+//                Log.i("retro","Retro no funciona")
+//                Log.i("retro","$myResponse")
             }
         }
     }
@@ -204,23 +259,23 @@ class MainActivity : AppCompatActivity() {
         ).get(PAViewModel::class.java)
 
         //llamamos a la lista de registros del viewmodel para observar los cambios que se produzcan
-        viewModel.listaUltimosReg.observe(this, { list ->
+        viewModel.listaUltimosReg.observe(this) { list ->
             list?.let {
                 //actualizamos la lista
                 registrosAdapter.updateList(it)
             }
-        })
+        }
 
         //recycler para las ultimas notas
         recyclerviewLastNotas = binding.rvrnotas
         recyclerviewLastNotas.layoutManager = GridLayoutManager(this,2)
         val notasAdaapter = NotasAdapter(onClickDelete = {nota -> onDeleteItem()})
         recyclerviewLastNotas.adapter = notasAdaapter
-        viewModel.listaUltimasNotas.observe(this,{list ->
-            list?.let{
+        viewModel.listaUltimasNotas.observe(this) { list ->
+            list?.let {
                 notasAdaapter.updateList(it)
             }
-        })
+        }
 
     }
 

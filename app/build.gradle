@@ -64,4 +64,9 @@ dependencies {
     implementation 'de.hdodenhof:circleimageview:3.1.0'
     //para la geolocalizacion
     implementation 'com.google.android.gms:play-services-location:21.0.1'
+    //retrofit. Para consumir APIS
+    implementation "com.squareup.retrofit2:retrofit:2.9.0"
+    implementation "com.squareup.retrofit2:converter-gson:2.9.0"
+    //picasso para cargar imagenes desde url
+    implementation 'com.squareup.picasso:picasso:2.8'
 }
