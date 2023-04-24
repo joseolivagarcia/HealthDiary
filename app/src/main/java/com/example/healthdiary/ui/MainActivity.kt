@@ -2,16 +2,14 @@ package com.example.healthdiary.ui
 
 import android.Manifest
 import android.annotation.SuppressLint
-import android.content.ContentValues.TAG
 import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
+import android.graphics.drawable.Drawable
 import android.location.Location
 import android.location.LocationManager
 import android.os.Bundle
-import android.os.Looper
 import android.util.Log
-import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
@@ -39,7 +37,7 @@ import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.launch
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
-import java.util.concurrent.TimeUnit
+import com.example.healthdiary.R
 
 class MainActivity : AppCompatActivity() {
 
@@ -195,6 +193,7 @@ class MainActivity : AppCompatActivity() {
     }
 
     //esta es la funcion que va a llamar a la API a traves de retrofit
+
     private fun getMeteo(lat: Double, lon: Double){
         Log.d("meteo", "$lat / $lon")
         //hacemos la llamada al retrofit (con la corutina)
@@ -212,6 +211,12 @@ class MainActivity : AppCompatActivity() {
                     runOnUiThread {
                         binding.tvlocation.text = response.meteoData[0].meteoCity //pongo la ciudad que me devuelva la api
                         binding.tvtemp.text = response.meteoData[0].meteoTemp.toString() //pongo la temp que devuelva la api
+                        binding.tvdescription.text = response.meteoData[0].meteoWeather.description//pongo la temp que devuelva la api
+                        /*Para nostrar el icono, lo que recibo de la api es un string, asi que guardo el string y luego en otra var de tipo
+                        * Drawable recupero el icono que estan en la carpeta Drawable (son png descargados). Luego se lo asigno al imageview*/
+                        val iconname: String =response.meteoData[0].meteoWeather.icon
+                        val icon: Drawable? = ContextCompat.getDrawable(binding.tvlocation.context,resources.getIdentifier(iconname,"drawable",packageName))
+                        binding.iviconmeteo.setImageDrawable(icon)
                     }
                 }
                 else{

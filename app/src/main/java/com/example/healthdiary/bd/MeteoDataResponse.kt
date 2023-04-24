@@ -11,5 +11,14 @@ data class MeteoDataResponse(
 //creo otra data class donde guardo los datos que me interesan de cada item que trae el resultado
 data class MeteoItemResponse(
     @SerializedName("city_name") val meteoCity: String,
-    @SerializedName("temp") val meteoTemp: Double
+    @SerializedName("temp") val meteoTemp: Double,
+    //necesito acceder a datos que no cuelgan de la raiz sino de otro padre, en este caso weather asi que lo recupero aqui
+    @SerializedName("weather") val meteoWeather: MeteoWeatherResponse //creo esta data class que contendra los datos de dentro de weather
 )
+
+data class MeteoWeatherResponse(
+    @SerializedName("icon") val icon: String,
+    @SerializedName("description") val description: String
+)
+
+//
