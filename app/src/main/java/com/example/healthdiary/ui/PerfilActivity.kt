@@ -1,12 +1,16 @@
 package com.example.healthdiary.ui
 
-import android.annotation.SuppressLint
 import android.content.Context
+import android.content.Intent
 import android.graphics.Color
+import android.net.Uri
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.provider.MediaStore
 import android.util.Log
-import android.widget.RadioButton
+import androidx.activity.result.PickVisualMediaRequest
+import androidx.activity.result.contract.ActivityResultContracts
+import androidx.core.net.toUri
 import androidx.core.widget.addTextChangedListener
 import androidx.datastore.core.DataStore
 import androidx.datastore.preferences.core.*
@@ -31,9 +35,27 @@ import kotlinx.coroutines.launch
 val Context.dataStore: DataStore<Preferences> by preferencesDataStore(name = "settings")
 
 class Perfil : AppCompatActivity() {
+    //hace falta crear un launcher para llamar a la "actividad" que abre la galeria
+    val pickMedia = registerForActivityResult(ActivityResultContracts.PickVisualMedia()){
+        //aqui necesitamos una funcion lambda que nos devolvera la uri de la imagen seleccionada
+            uri->
+        if(uri !=null){
+            //tenemos imagen
+            binding.imageperfil.setImageURI(uri) //traigo la uri (imagen seleccionada) despues de lanzar el launch desde el "boton"
+            //guardamos la foto escogida(uri) como string en la base de datos datastore. Hay que hacerlo en Corutina
+            CoroutineScope(Dispatchers.IO).launch {
+                saveImagen(uri.toString())
+                Log.i("uri","$uri")
+            }
+
+        }else{
+            //no tenemos imagen
+        }
+    }
 
     //creo un companion object para guardarme las constantes que utilizare como clave donde lo necesite
     companion object {
+        const val IMAGEN = "imagen"
         const val NOMBRE = "nombre"
         const val SEXO = "sexo"
         const val ALTURA = "altura"
@@ -59,6 +81,8 @@ class Perfil : AppCompatActivity() {
                 if (settingsModel != null) {
                     //como esto va a modificar la UI debe hacerse en el hilo ppal para que no pete
                     runOnUiThread {
+                        //binding.imageperfil.setImageResource(R.drawable.ic_profile) //mientras arreglo lo de los permisos
+                        binding.imageperfil.setImageURI(Uri.parse(settingsModel.foto))
                         binding.etnombre.setText(settingsModel.nombre)
                         binding.rsAltura.setValues(settingsModel.altura.toFloat())
                         binding.rgsexo.check(settingsModel.sexo)
@@ -75,6 +99,13 @@ class Perfil : AppCompatActivity() {
     }
 
     private fun initUI() {
+
+        //para escoger una foto de la galeria y traerla al imageview pulsamos sobre el
+        binding.imageperfil.setOnClickListener {
+            //aqui llamamos al launcher que creamos arriba y le pasamos el tipo de recurso que queremos traer (en este caso una foto)
+            pickMedia.launch(PickVisualMediaRequest(ActivityResultContracts.PickVisualMedia.ImageOnly))
+
+        }
 
         /*hacemos que cuando cambie el slider de la altura y/o el peso pase algo.
         Solo necesitamos el valor de value, por eso las _ en los otros parametros.
@@ -122,6 +153,13 @@ class Perfil : AppCompatActivity() {
             }
         }
 
+    }
+
+    //creo una funcion para guardar la imagen
+    private suspend fun saveImagen(foto: String){
+        dataStore.edit { preferences ->
+            preferences[stringPreferencesKey(IMAGEN)] = foto
+        }
     }
 
     //creo una funcion donde almacenare la altura y otra para el peso que haya seleccionado el usuario que recibe un int
@@ -203,6 +241,7 @@ class Perfil : AppCompatActivity() {
             //creo un objeto de tipo SettingsModel pasandole los 6 parametros que he guardado
             //como los parametros pueden ser nulos usamos el operador elvis ?: para dar un valor por defecto si fuera nulo
             SettingsModel(
+                foto = preferences[stringPreferencesKey(IMAGEN)] ?: "",
                 nombre = preferences[stringPreferencesKey(NOMBRE)] ?: "Tu nombre",
                 sexo = preferences[intPreferencesKey(SEXO)] ?: binding.rbhombre.id,
                 altura = preferences[intPreferencesKey(ALTURA)] ?: 150,

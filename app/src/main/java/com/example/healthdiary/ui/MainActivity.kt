@@ -11,6 +11,7 @@ import android.location.LocationManager
 import android.os.Bundle
 import android.util.Log
 import android.widget.Toast
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
@@ -48,11 +49,13 @@ class MainActivity : AppCompatActivity() {
 
     //variables para la geolocalizacion
     private lateinit var fusedLocationProviderClient: FusedLocationProviderClient
-    private var latitud:Double = 0.0
-    private var longitud:Double = 0.0
-    companion object{
+    private var latitud: Double = 0.0
+    private var longitud: Double = 0.0
+
+    companion object {
         private const val PERMISSION_REQUEST_ACCESS_LOCATION = 100
     }
+
     //variable para poder usar retrofit
     private lateinit var retrofit: Retrofit
 
@@ -92,8 +95,8 @@ class MainActivity : AppCompatActivity() {
 
     private fun getCurrentLocation() {
 
-        if (checkPermissions()){
-            if (isLocationEnable()){
+        if (checkPermissions()) {
+            if (isLocationEnable()) {
                 //final latitud y longitud code here
                 if (ActivityCompat.checkSelfPermission(
                         this,
@@ -106,56 +109,60 @@ class MainActivity : AppCompatActivity() {
                     requestPermission()
                     return
                 }
-                fusedLocationProviderClient.lastLocation.addOnCompleteListener(this){ task ->
+                fusedLocationProviderClient.lastLocation.addOnCompleteListener(this) { task ->
                     val location: Location? = task.result
-                    if(location == null){
-                        Toast.makeText(this,"Null received",Toast.LENGTH_SHORT).show()
-                    }else{
-                        Toast.makeText(this,"Get Success",Toast.LENGTH_SHORT).show()
+                    if (location == null) {
+                        Toast.makeText(this, "Null received", Toast.LENGTH_SHORT).show()
+                    } else {
+                        Toast.makeText(this, "Get Success", Toast.LENGTH_SHORT).show()
                         latitud = location.latitude
                         longitud = location.longitude
                         //llamo a la funcion que recoge los datos del tiempo de la API y le paso la lat y lon
-                        getMeteo(latitud,longitud)
+                        getMeteo(latitud, longitud)
                         //binding.tvlocation.text = "$latitud / $longitud"
                     }
                 }
 
-            }
-            else{
+            } else {
                 //setting open here
-                Toast.makeText(this,"Activa la localizacion",Toast.LENGTH_SHORT).show()
+                Toast.makeText(this, "Activa la localizacion", Toast.LENGTH_SHORT).show()
                 val intent = Intent(android.provider.Settings.ACTION_LOCATION_SOURCE_SETTINGS)
                 startActivity(intent)
             }
-        }
-        else{
+        } else {
             //request permission here
             requestPermission()
         }
     }
 
-    private fun isLocationEnable(): Boolean{
-        val locationManager: LocationManager = getSystemService(Context.LOCATION_SERVICE) as LocationManager
+    private fun isLocationEnable(): Boolean {
+        val locationManager: LocationManager =
+            getSystemService(Context.LOCATION_SERVICE) as LocationManager
         return locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER) ||
                 locationManager.isProviderEnabled(LocationManager.NETWORK_PROVIDER)
     }
 
     private fun requestPermission() {
         ActivityCompat.requestPermissions(
-            this, arrayOf(android.Manifest.permission.ACCESS_COARSE_LOCATION,
-                Manifest.permission.ACCESS_FINE_LOCATION),
+            this, arrayOf(
+                android.Manifest.permission.ACCESS_COARSE_LOCATION,
+                Manifest.permission.ACCESS_FINE_LOCATION
+            ),
             PERMISSION_REQUEST_ACCESS_LOCATION
         )
     }
 
 
-
-    private fun checkPermissions(): Boolean{
-        if(ActivityCompat.checkSelfPermission(this,
-                android.Manifest.permission.ACCESS_COARSE_LOCATION)
-            ==PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this,
-                Manifest.permission.ACCESS_FINE_LOCATION)==PackageManager.PERMISSION_GRANTED)
-        {
+    private fun checkPermissions(): Boolean {
+        if (ActivityCompat.checkSelfPermission(
+                this,
+                android.Manifest.permission.ACCESS_COARSE_LOCATION
+            )
+            == PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(
+                this,
+                Manifest.permission.ACCESS_FINE_LOCATION
+            ) == PackageManager.PERMISSION_GRANTED
+        ) {
             return true
         }
 
@@ -170,13 +177,12 @@ class MainActivity : AppCompatActivity() {
     ) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults)
 
-        if(requestCode == PERMISSION_REQUEST_ACCESS_LOCATION){
-            if(grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED){
-                Toast.makeText(applicationContext,"GRANTED", Toast.LENGTH_SHORT).show()
+        if (requestCode == PERMISSION_REQUEST_ACCESS_LOCATION) {
+            if (grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                Toast.makeText(applicationContext, "GRANTED", Toast.LENGTH_SHORT).show()
                 getCurrentLocation()
-            }
-            else{
-                Toast.makeText(applicationContext,"DENIED", Toast.LENGTH_SHORT).show()
+            } else {
+                Toast.makeText(applicationContext, "DENIED", Toast.LENGTH_SHORT).show()
             }
         }
     }
@@ -194,41 +200,46 @@ class MainActivity : AppCompatActivity() {
 
     //esta es la funcion que va a llamar a la API a traves de retrofit
 
-    private fun getMeteo(lat: Double, lon: Double){
+    private fun getMeteo(lat: Double, lon: Double) {
         Log.d("meteo", "$lat / $lon")
         //hacemos la llamada al retrofit (con la corutina)
         //el dispatchers especifica el hilo en donde queremos ejecutar, en este caso un hilo secundario
         CoroutineScope(Dispatchers.IO).launch {
             //guardamos en una var la llamada a nuestra Apiservice y a la funcion necesaria a la que pasamos los datos de localizacion
-            val myResponse = retrofit.create(ApiServices::class.java).getMeteo(latitud,longitud)
-            if(myResponse.isSuccessful){
-                Log.i("retro","FUNCIONA!!!")
+            val myResponse = retrofit.create(ApiServices::class.java).getMeteo(latitud, longitud)
+            if (myResponse.isSuccessful) {
+                Log.i("retro", "FUNCIONA!!!")
                 //ahora en una val guardo lo que traiga la respuesta a traves del .body()
-                val response: MeteoDataResponse? = myResponse.body() //tener en cuenta que MeteoDataResponse puede ser nulo
-                if(response != null){
+                val response: MeteoDataResponse? =
+                    myResponse.body() //tener en cuenta que MeteoDataResponse puede ser nulo
+                if (response != null) {
                     //Log.i("datosmeteo","${response.meteoData[0].meteoCity}")
                     //como voy a modificar la UI lo tengo que hacer en un hilo ppal y no en este que es secundario
                     runOnUiThread {
-                        binding.tvlocation.text = response.meteoData[0].meteoCity //pongo la ciudad que me devuelva la api
-                        binding.tvtemp.text = response.meteoData[0].meteoTemp.toString() //pongo la temp que devuelva la api
-                        binding.tvdescription.text = response.meteoData[0].meteoWeather.description//pongo la temp que devuelva la api
+                        binding.tvlocation.text =
+                            response.meteoData[0].meteoCity //pongo la ciudad que me devuelva la api
+                        binding.tvtemp.text =
+                            response.meteoData[0].meteoTemp.toString() //pongo la temp que devuelva la api
+                        binding.tvdescription.text =
+                            response.meteoData[0].meteoWeather.description//pongo la temp que devuelva la api
                         /*Para nostrar el icono, lo que recibo de la api es un string, asi que guardo el string y luego en otra var de tipo
                         * Drawable recupero el icono que estan en la carpeta Drawable (son png descargados). Luego se lo asigno al imageview*/
-                        val iconname: String =response.meteoData[0].meteoWeather.icon
-                        val icon: Drawable? = ContextCompat.getDrawable(binding.tvlocation.context,resources.getIdentifier(iconname,"drawable",packageName))
+                        val iconname: String = response.meteoData[0].meteoWeather.icon
+                        val icon: Drawable? = ContextCompat.getDrawable(
+                            binding.tvlocation.context,
+                            resources.getIdentifier(iconname, "drawable", packageName)
+                        )
                         binding.iviconmeteo.setImageDrawable(icon)
                     }
-                }
-                else{
+                } else {
                     //Log.i("datosmeteo","no tengo datos")
                 }
-            }else{
+            } else {
 //                Log.i("retro","Retro no funciona")
 //                Log.i("retro","$myResponse")
             }
         }
     }
-
 
     private fun initListener() {
         binding.btnperfil.setOnClickListener {
@@ -242,7 +253,12 @@ class MainActivity : AppCompatActivity() {
         }
 
         binding.btnmenunotas.setOnClickListener {
-            val intent = Intent(this,NotasActivity::class.java)
+            val intent = Intent(this, NotasActivity::class.java)
+            startActivity(intent)
+        }
+
+        binding.btninfo.setOnClickListener {
+            val intent = Intent(this,InfoActivity::class.java)
             startActivity(intent)
         }
 
@@ -273,8 +289,8 @@ class MainActivity : AppCompatActivity() {
 
         //recycler para las ultimas notas
         recyclerviewLastNotas = binding.rvrnotas
-        recyclerviewLastNotas.layoutManager = GridLayoutManager(this,2)
-        val notasAdaapter = NotasAdapter(onClickDelete = {nota -> onDeleteItem()})
+        recyclerviewLastNotas.layoutManager = GridLayoutManager(this, 2)
+        val notasAdaapter = NotasAdapter(onClickDelete = { nota -> onDeleteItem() })
         recyclerviewLastNotas.adapter = notasAdaapter
         viewModel.listaUltimasNotas.observe(this) { list ->
             list?.let {
@@ -295,6 +311,7 @@ class MainActivity : AppCompatActivity() {
             //como los parametros pueden ser nulos usamos el operador elvis ?: para dar un valor por defecto si fuera nulo
             //el id del radiobutton del sexo me lo he inventado porque aqui no lo necesito (solo necesito el nombre)
             SettingsModel(
+                foto =preferences[stringPreferencesKey((Perfil.IMAGEN))] ?: "",
                 nombre = preferences[stringPreferencesKey(Perfil.NOMBRE)] ?: "Tu nombre",
                 sexo = preferences[intPreferencesKey(Perfil.SEXO)] ?: 22233,
                 altura = preferences[intPreferencesKey(Perfil.ALTURA)] ?: 150,

@@ -69,4 +69,6 @@ dependencies {
     implementation "com.squareup.retrofit2:converter-gson:2.9.0"
     //picasso para cargar imagenes desde url
     implementation 'com.squareup.picasso:picasso:2.8'
+    //para seleccionar foto de la galeria necesitamos esta libreria de las activitys
+    implementation 'androidx.activity:activity:1.7.1'
 }
