@@ -43,16 +43,39 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/llhola">
-
-        <TextView
-            android:id="@+id/tvnombre"
+        <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="5dp"
-            android:text="José Oliva"
-            android:textColor="@color/black"
-            android:textSize="24sp"
-            android:textStyle="bold" />
+            android:orientation="vertical">
+            <TextView
+                android:id="@+id/tvnombre"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="5dp"
+                android:text="José Oliva"
+                android:textColor="@color/degradado2"
+                android:textSize="24sp"
+                android:textStyle="bold" />
+            <TextView
+                android:id="@+id/tvaltura"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="5dp"
+                tools:text="170 cm"
+                android:textColor="@color/degradado1"
+                android:textSize="16sp"
+                android:textStyle="italic" />
+            <TextView
+                android:id="@+id/tvpeso"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="5dp"
+                tools:text="70 kg"
+                android:textColor="@color/degradado1"
+                android:textSize="16sp"
+                android:textStyle="italic" />
+
+        </LinearLayout>
 
         <de.hdodenhof.circleimageview.CircleImageView
             android:layout_width="70dp"
@@ -93,10 +116,9 @@
                     android:id="@+id/tvtemp"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    tools:text="23º"
+                    tools:text="23"
                     android:textColor="@color/degradado2"
                     android:textSize="40sp"
-                    android:layout_marginRight="10dp"
                     android:gravity="center"/>
                 <ImageView
                     android:id="@+id/iviconmeteo"
@@ -201,7 +223,7 @@
         android:layout_height="wrap_content"
         android:layout_marginHorizontal="16dp"
         android:layout_marginTop="10dp"
-        android:text="Últimos Registros"
+        android:text="Últimos Registros (3)"
         android:textColor="@color/black"
         android:textSize="18sp"
         android:textStyle="bold"
@@ -226,7 +248,7 @@
         android:layout_height="wrap_content"
         android:layout_marginHorizontal="16dp"
         android:layout_marginTop="5dp"
-        android:text="Últimas Notas"
+        android:text="Últimas Notas (4)"
         android:textColor="@color/black"
         android:textSize="18sp"
         android:textStyle="bold"

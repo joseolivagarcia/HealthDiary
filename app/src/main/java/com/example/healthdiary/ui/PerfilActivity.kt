@@ -81,8 +81,8 @@ class Perfil : AppCompatActivity() {
                 if (settingsModel != null) {
                     //como esto va a modificar la UI debe hacerse en el hilo ppal para que no pete
                     runOnUiThread {
-                        //binding.imageperfil.setImageResource(R.drawable.ic_profile) //mientras arreglo lo de los permisos
-                        binding.imageperfil.setImageURI(Uri.parse(settingsModel.foto))
+                        binding.imageperfil.setImageResource(R.drawable.ic_profile) //mientras arreglo lo de los permisos
+                        //binding.imageperfil.setImageURI(Uri.parse(settingsModel.foto))
                         binding.etnombre.setText(settingsModel.nombre)
                         binding.rsAltura.setValues(settingsModel.altura.toFloat())
                         binding.rgsexo.check(settingsModel.sexo)

@@ -78,6 +78,8 @@ class MainActivity : AppCompatActivity() {
                     //como esto va a modificar la UI debe hacerse en el hilo ppal para que no pete
                     runOnUiThread {
                         binding.tvnombre.setText(settingsModel.nombre)
+                        binding.tvaltura.setText("${settingsModel.altura} cm")
+                        binding.tvpeso.setText("${settingsModel.peso} kg")
                     }
                 }
             }
@@ -314,8 +316,8 @@ class MainActivity : AppCompatActivity() {
                 foto =preferences[stringPreferencesKey((Perfil.IMAGEN))] ?: "",
                 nombre = preferences[stringPreferencesKey(Perfil.NOMBRE)] ?: "Tu nombre",
                 sexo = preferences[intPreferencesKey(Perfil.SEXO)] ?: 22233,
-                altura = preferences[intPreferencesKey(Perfil.ALTURA)] ?: 150,
-                peso = preferences[floatPreferencesKey(Perfil.PESO)] ?: 60f,
+                altura = preferences[intPreferencesKey(Perfil.ALTURA)] ?: 0,
+                peso = preferences[floatPreferencesKey(Perfil.PESO)] ?: 0f,
                 imc = preferences[floatPreferencesKey(Perfil.IMC)] ?: 0f,
                 darkmode = preferences[booleanPreferencesKey(Perfil.DARKMODE)] ?: false
             )

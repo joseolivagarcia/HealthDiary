@@ -13,7 +13,7 @@ interface PA_DAO {
     fun getAllPA_items(): LiveData<List<PA_item_model>>
 
     //query para obtener los ultimos registros limitados a 3
-    @Query("select * from table_PA Order By fecha Desc Limit 3")
+    @Query("select * from table_PA Order By fecha Asc Limit 3")
     fun getLastPA_items(): LiveData<List<PA_item_model>>
 
     //query para obtener todas las notas
