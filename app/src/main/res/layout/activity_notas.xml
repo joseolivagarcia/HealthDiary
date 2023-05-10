@@ -25,7 +25,7 @@
             android:layout_width="match_parent"
             android:layout_height="70dp"
             android:layout_marginLeft="5dp"
-            android:hint="Escribe una nota"
+            android:hint="@string/escribe_una_nota"
             android:maxLines="2"
             android:maxLength="56"/>
     </LinearLayout>
@@ -36,7 +36,7 @@
         app:layout_constraintTop_toBottomOf="@id/Llnotas"
         android:backgroundTint="@color/degradado1"
         android:layout_marginHorizontal="16dp"
-        android:text="Añadir Nota"/>
+        android:text="@string/add_note"/>
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rvNotas"

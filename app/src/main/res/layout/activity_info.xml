@@ -38,7 +38,7 @@
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Pulsa perfil para insertar tus datos y obtener una mejor experiencia en la app."
+            android:text="@string/perfil_info"
             android:textColor="@color/degradado2"
             android:textSize="16sp"/>
 
@@ -62,7 +62,7 @@
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Pulsa registros para acceder a todos los registros guardados y poder insertar nuevos registros."
+            android:text="@string/registros_info"
             android:textColor="@color/degradado2"
             android:textSize="16sp"/>
 
@@ -86,7 +86,7 @@
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Pulsa notas para ver las notas registradas y añadir las que consideres oportuno."
+            android:text="@string/notas_info"
             android:textColor="@color/degradado2"
             android:textSize="16sp"/>
 

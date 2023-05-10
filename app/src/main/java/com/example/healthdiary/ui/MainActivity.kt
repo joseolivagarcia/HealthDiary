@@ -314,7 +314,7 @@ class MainActivity : AppCompatActivity() {
             //el id del radiobutton del sexo me lo he inventado porque aqui no lo necesito (solo necesito el nombre)
             SettingsModel(
                 foto =preferences[stringPreferencesKey((Perfil.IMAGEN))] ?: "",
-                nombre = preferences[stringPreferencesKey(Perfil.NOMBRE)] ?: "Tu nombre",
+                nombre = preferences[stringPreferencesKey(Perfil.NOMBRE)] ?: "Your name",
                 sexo = preferences[intPreferencesKey(Perfil.SEXO)] ?: 22233,
                 altura = preferences[intPreferencesKey(Perfil.ALTURA)] ?: 0,
                 peso = preferences[floatPreferencesKey(Perfil.PESO)] ?: 0f,

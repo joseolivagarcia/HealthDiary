@@ -50,11 +50,12 @@
                 android:layout_width="match_parent"
                 android:layout_height="48dp"
                 android:layout_margin="16dp"
-                android:hint="Nombre o Alias"
+                android:hint="@string/nombre_o_alias"
                 android:textColorHint="@color/white"
                 app:hintAnimationEnabled="true"
                 android:textColor="@color/white"
-                android:singleLine="true" />
+                android:singleLine="true"
+                android:maxLength="14"/>
         </LinearLayout>
 
         <RadioGroup
@@ -105,14 +106,14 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Altura"
+                    android:text="@string/altura"
                     android:textColor="@color/white"/>
 
                 <com.google.android.material.slider.RangeSlider
                     android:id="@+id/rsAltura"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:contentDescription="Altura"
+                    android:contentDescription="@string/altura"
                     android:stepSize="1"
                     android:valueFrom="100"
                     android:valueTo="220" />
@@ -143,14 +144,14 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Peso"
+                    android:text="@string/peso"
                     android:textColor="@color/white"/>
 
                 <com.google.android.material.slider.RangeSlider
                     android:id="@+id/rsPeso"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:contentDescription="Peso"
+                    android:contentDescription="@string/peso"
                     android:stepSize="0"
                     android:valueFrom="30"
                     android:valueTo="120" />
@@ -168,7 +169,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="2dp"
-                android:text="IMC"
+                android:text="@string/imc"
                 android:textColor="@color/white"
                 android:textSize="14sp"
                 android:textStyle="bold" />
@@ -205,13 +206,13 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Modo Oscuro"
+                    android:text="@string/modo_oscuro"
                     android:textColor="@color/white"/>
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Activa el modo oscuro para un cambio visual"
+                    android:text="@string/texto_modo_oscuro"
                     android:textColor="@color/white"
                     android:textSize="11sp" />
             </LinearLayout>

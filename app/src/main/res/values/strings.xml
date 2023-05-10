@@ -1,3 +1,21 @@
 <resources>
     <string name="app_name">HealthDiary</string>
+    <string name="saludo">Hi!</string>
+    <string name="nombre">Your name</string>
+    <string name="Menu">Menu</string>
+    <string name="ultimos_registros">Last Registers (3)</string>
+    <string name="ultimas_notas">Last Notes (4)</string>
+    <string name="sistole">Systole</string>
+    <string name="diastole">Diastole</string>
+    <string name="nombre_o_alias">Name or Nickname</string>
+    <string name="altura">Height</string>
+    <string name="peso">Weight</string>
+    <string name="imc">BMI</string>
+    <string name="modo_oscuro">Dark Mode</string>
+    <string name="texto_modo_oscuro">Turn on dark mode for a visual change.</string>
+    <string name="add_note">Add Note</string>
+    <string name="escribe_una_nota">Write a note</string>
+    <string name="perfil_info">Press profile to insert your data and get a better experience in the app.</string>
+    <string name="registros_info">" Press records to access all saved records and be able to insert new records. Press and hold to delete a record."</string>
+    <string name="notas_info">Press notes to see the registered notes and add the ones you consider appropriate. Touch and hold to delete a note.</string>
 </resources>

@@ -242,7 +242,7 @@ class Perfil : AppCompatActivity() {
             //como los parametros pueden ser nulos usamos el operador elvis ?: para dar un valor por defecto si fuera nulo
             SettingsModel(
                 foto = preferences[stringPreferencesKey(IMAGEN)] ?: "",
-                nombre = preferences[stringPreferencesKey(NOMBRE)] ?: "Tu nombre",
+                nombre = preferences[stringPreferencesKey(NOMBRE)] ?: "",
                 sexo = preferences[intPreferencesKey(SEXO)] ?: binding.rbhombre.id,
                 altura = preferences[intPreferencesKey(ALTURA)] ?: 150,
                 peso = preferences[floatPreferencesKey(PESO)] ?: 60f,

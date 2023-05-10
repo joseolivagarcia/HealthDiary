@@ -28,7 +28,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginLeft="5dp"
-            android:text="¡Hola!"
+            android:text="@string/saludo"
             android:textSize="18sp"
             android:textStyle="bold" />
     </LinearLayout>
@@ -38,13 +38,14 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginLeft="16dp"
+        android:layout_marginRight="16dp"
         android:gravity="center_vertical"
         android:orientation="horizontal"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/llhola">
         <LinearLayout
-            android:layout_width="wrap_content"
+            android:layout_width="180dp"
             android:layout_height="wrap_content"
             android:orientation="vertical">
             <TextView
@@ -52,10 +53,11 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="5dp"
-                android:text="José Oliva"
+                tools:text="José Oliva11111"
                 android:textColor="@color/degradado2"
                 android:textSize="24sp"
-                android:textStyle="bold" />
+                android:textStyle="bold"
+                android:maxLength="14"/>
             <TextView
                 android:id="@+id/tvaltura"
                 android:layout_width="wrap_content"
@@ -80,7 +82,7 @@
         <de.hdodenhof.circleimageview.CircleImageView
             android:layout_width="70dp"
             android:layout_height="70dp"
-            android:layout_marginStart="170dp"
+            android:layout_marginStart="100dp"
             android:src="@color/degradado1" />
     </LinearLayout>
 
@@ -97,7 +99,8 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:orientation="vertical">
+            android:orientation="vertical"
+            android:background="@color/degradado1">
             <TextView
                 android:id="@+id/tvlocation"
                 android:layout_width="match_parent"
@@ -105,7 +108,7 @@
                 tools:text="Location"
                 android:textSize="16sp"
                 android:gravity="center"
-                android:textColor="@color/degradado1"
+                android:textColor="@color/white"
                 android:layout_marginTop="5dp"/>
             <LinearLayout
                 android:layout_width="match_parent"
@@ -117,7 +120,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     tools:text="23"
-                    android:textColor="@color/degradado2"
+                    android:textColor="@color/white"
                     android:textSize="40sp"
                     android:gravity="center"/>
                 <ImageView
@@ -134,7 +137,7 @@
                 tools:text="Description"
                 android:textSize="18sp"
                 android:gravity="center"
-                android:textColor="@color/degradado3"/>
+                android:textColor="@color/white"/>
         </LinearLayout>
     </androidx.cardview.widget.CardView>
 
@@ -144,7 +147,7 @@
         android:layout_height="wrap_content"
         android:layout_marginHorizontal="16dp"
         android:layout_marginTop="20dp"
-        android:text="Menú"
+        android:text="@string/Menu"
         android:textColor="@color/black"
         android:textSize="18sp"
         android:textStyle="bold"
@@ -223,7 +226,7 @@
         android:layout_height="wrap_content"
         android:layout_marginHorizontal="16dp"
         android:layout_marginTop="10dp"
-        android:text="Últimos Registros (3)"
+        android:text="@string/ultimos_registros"
         android:textColor="@color/black"
         android:textSize="18sp"
         android:textStyle="bold"
@@ -248,7 +251,7 @@
         android:layout_height="wrap_content"
         android:layout_marginHorizontal="16dp"
         android:layout_marginTop="5dp"
-        android:text="Últimas Notas (4)"
+        android:text="@string/ultimas_notas"
         android:textColor="@color/black"
         android:textSize="18sp"
         android:textStyle="bold"
