@@ -12,6 +12,7 @@ interface ApiServices {
     @GET("current")
     //@GET("?lat=latitud&lon=longitud&key=4228cda124a341a6976cbcb6def30c07")
     suspend fun getMeteo(@Query("lat")lat: Double,@Query("lon")lon: Double,
-                         @Query("Key")key:String = "4228cda124a341a6976cbcb6def30c07",
-                         @Query("lang")lang:String = "es"): Response<MeteoDataResponse>
+                         @Query("lang")lang:String,
+                         @Query("Key")key:String = "4228cda124a341a6976cbcb6def30c07"
+                         ): Response<MeteoDataResponse>
 }

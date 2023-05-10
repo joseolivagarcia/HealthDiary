@@ -1,7 +1,6 @@
 package com.example.healthdiary.ui
 
 import android.Manifest
-import android.annotation.SuppressLint
 import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
@@ -11,7 +10,6 @@ import android.location.LocationManager
 import android.os.Bundle
 import android.util.Log
 import android.widget.Toast
-import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
@@ -20,7 +18,6 @@ import androidx.datastore.preferences.core.floatPreferencesKey
 import androidx.datastore.preferences.core.intPreferencesKey
 import androidx.datastore.preferences.core.stringPreferencesKey
 import androidx.lifecycle.ViewModelProvider
-import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.healthdiary.adapter.NotasAdapter
@@ -38,7 +35,7 @@ import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.launch
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
-import com.example.healthdiary.R
+import java.util.Locale
 
 class MainActivity : AppCompatActivity() {
 
@@ -46,6 +43,9 @@ class MainActivity : AppCompatActivity() {
     lateinit var viewModel: PAViewModel
     lateinit var recyclerViewLastReg: RecyclerView
     lateinit var recyclerviewLastNotas: RecyclerView
+
+    //variable para obtener el idioma del dispositivo
+    private var idioma: String = "es"
 
     //variables para la geolocalizacion
     private lateinit var fusedLocationProviderClient: FusedLocationProviderClient
@@ -63,6 +63,9 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
+
+        idioma =  Locale.getDefault().language
+        Log.i("idioma", "$idioma")
 
         //variable para usar los servicios de geolocalizacion
         fusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(this)
@@ -120,7 +123,7 @@ class MainActivity : AppCompatActivity() {
                         latitud = location.latitude
                         longitud = location.longitude
                         //llamo a la funcion que recoge los datos del tiempo de la API y le paso la lat y lon
-                        getMeteo(latitud, longitud)
+                        getMeteo()
                         //binding.tvlocation.text = "$latitud / $longitud"
                     }
                 }
@@ -202,13 +205,13 @@ class MainActivity : AppCompatActivity() {
 
     //esta es la funcion que va a llamar a la API a traves de retrofit
 
-    private fun getMeteo(lat: Double, lon: Double) {
-        Log.d("meteo", "$lat / $lon")
+    private fun getMeteo() {
+        //Log.d("meteo", "$lat / $lon")
         //hacemos la llamada al retrofit (con la corutina)
         //el dispatchers especifica el hilo en donde queremos ejecutar, en este caso un hilo secundario
         CoroutineScope(Dispatchers.IO).launch {
             //guardamos en una var la llamada a nuestra Apiservice y a la funcion necesaria a la que pasamos los datos de localizacion
-            val myResponse = retrofit.create(ApiServices::class.java).getMeteo(latitud, longitud)
+            val myResponse = retrofit.create(ApiServices::class.java).getMeteo(latitud, longitud,idioma)
             if (myResponse.isSuccessful) {
                 Log.i("retro", "FUNCIONA!!!")
                 //ahora en una val guardo lo que traiga la respuesta a traves del .body()
@@ -291,7 +294,7 @@ class MainActivity : AppCompatActivity() {
 
         //recycler para las ultimas notas
         recyclerviewLastNotas = binding.rvrnotas
-        recyclerviewLastNotas.layoutManager = GridLayoutManager(this, 2)
+        recyclerviewLastNotas.layoutManager = LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL,false)
         val notasAdaapter = NotasAdapter(onClickDelete = { nota -> onDeleteItem() })
         recyclerviewLastNotas.adapter = notasAdaapter
         viewModel.listaUltimasNotas.observe(this) { list ->
