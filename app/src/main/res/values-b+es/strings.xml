@@ -18,4 +18,12 @@
     <string name="perfil_info">Presiona perfil para insertar tus datos y obtener una mejor experiencia en la app.</string>
     <string name="registros_info">Pulse registros para acceder a todos los registros guardados y poder insertar nuevos registros. Mantenga presionado para eliminar un registro.</string>
     <string name="notas_info">Pulsa notas para ver las notas registradas y añadir las que consideres oportunas. Toque y mantenga presionado para eliminar una nota.</string>
+    <string name="lectura_1">LECTURA 1</string>
+    <string name="lectura_2">LECTURA 2</string>
+    <string name="lectura_3">LECTURA 3</string>
+    <string name="guardar">GUARDAR</string>
+    <string name="pas">PAS</string>
+    <string name="pad">PAD</string>
+    <string name="fc">FC</string>
+    <string name="presi_n_arterial">PRESIÓN ARTERIAL</string>
 </resources>

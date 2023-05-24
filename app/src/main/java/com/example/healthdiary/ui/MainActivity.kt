@@ -18,6 +18,7 @@ import androidx.datastore.preferences.core.floatPreferencesKey
 import androidx.datastore.preferences.core.intPreferencesKey
 import androidx.datastore.preferences.core.stringPreferencesKey
 import androidx.lifecycle.ViewModelProvider
+import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.healthdiary.adapter.NotasAdapter
@@ -294,7 +295,7 @@ class MainActivity : AppCompatActivity() {
 
         //recycler para las ultimas notas
         recyclerviewLastNotas = binding.rvrnotas
-        recyclerviewLastNotas.layoutManager = LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL,false)
+        recyclerviewLastNotas.layoutManager = GridLayoutManager(this, 2)
         val notasAdaapter = NotasAdapter(onClickDelete = { nota -> onDeleteItem() })
         recyclerviewLastNotas.adapter = notasAdaapter
         viewModel.listaUltimasNotas.observe(this) { list ->

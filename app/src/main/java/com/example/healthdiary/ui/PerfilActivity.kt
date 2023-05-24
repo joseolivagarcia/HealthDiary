@@ -1,16 +1,13 @@
 package com.example.healthdiary.ui
 
 import android.content.Context
-import android.content.Intent
 import android.graphics.Color
 import android.net.Uri
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.provider.MediaStore
 import android.util.Log
 import androidx.activity.result.PickVisualMediaRequest
 import androidx.activity.result.contract.ActivityResultContracts
-import androidx.core.net.toUri
 import androidx.core.widget.addTextChangedListener
 import androidx.datastore.core.DataStore
 import androidx.datastore.preferences.core.*
@@ -24,6 +21,8 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.filter
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.launch
+import java.io.File
+
 
 /*
 * Creamos una funcion de extension que se llamara dataStore del tipo DataStore.
@@ -44,7 +43,7 @@ class Perfil : AppCompatActivity() {
             binding.imageperfil.setImageURI(uri) //traigo la uri (imagen seleccionada) despues de lanzar el launch desde el "boton"
             //guardamos la foto escogida(uri) como string en la base de datos datastore. Hay que hacerlo en Corutina
             CoroutineScope(Dispatchers.IO).launch {
-                saveImagen(uri.toString())
+                saveImagen(uri.toString(), uri)
                 Log.i("uri","$uri")
             }
 
@@ -81,8 +80,8 @@ class Perfil : AppCompatActivity() {
                 if (settingsModel != null) {
                     //como esto va a modificar la UI debe hacerse en el hilo ppal para que no pete
                     runOnUiThread {
-                        binding.imageperfil.setImageResource(R.drawable.ic_profile) //mientras arreglo lo de los permisos
-                        //binding.imageperfil.setImageURI(Uri.parse(settingsModel.foto))
+                        //binding.imageperfil.setImageResource(R.drawable.ic_profile) //mientras arreglo lo de los permisos
+                        binding.imageperfil.setImageURI(Uri.parse(settingsModel.foto))
                         binding.etnombre.setText(settingsModel.nombre)
                         binding.rsAltura.setValues(settingsModel.altura.toFloat())
                         binding.rgsexo.check(settingsModel.sexo)
@@ -156,9 +155,19 @@ class Perfil : AppCompatActivity() {
     }
 
     //creo una funcion para guardar la imagen
-    private suspend fun saveImagen(foto: String){
+    private suspend fun saveImagen(foto: String, uri: Uri){
+
+        //guardo el uri de la imagen convertido a file y a su vez a bytes para guardarlo en el dispositivo
+        val file = File(applicationContext.filesDir,"foto")
+        val bytes = applicationContext.contentResolver.openInputStream(uri)?.readBytes()!!
+        file.writeBytes(bytes)
+        //vuelvo a obtener la uri pero ahora del file que he guardado en el dispositivo(no el de la galeria)
+        val uridisp = Uri.fromFile(file)
+        //y la guardo en los settings como un string
         dataStore.edit { preferences ->
-            preferences[stringPreferencesKey(IMAGEN)] = foto
+            preferences[stringPreferencesKey(IMAGEN)] = uridisp.toString()
+            Log.i("foto","$foto")
+            Log.i("file","$uridisp")
         }
     }
 

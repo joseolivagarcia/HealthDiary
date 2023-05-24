@@ -18,4 +18,12 @@
     <string name="perfil_info">Press profile to insert your data and get a better experience in the app.</string>
     <string name="registros_info">" Press records to access all saved records and be able to insert new records. Press and hold to delete a record."</string>
     <string name="notas_info">Press notes to see the registered notes and add the ones you consider appropriate. Touch and hold to delete a note.</string>
+    <string name="lectura_1">READING 1</string>
+    <string name="lectura_2">READING 2</string>
+    <string name="lectura_3">READING 3</string>
+    <string name="guardar">SAVE</string>
+    <string name="pas">SYS</string>
+    <string name="pad">DIA</string>
+    <string name="fc">HR</string>
+    <string name="presi_n_arterial">BLOOD PRESSURE</string>
 </resources>
