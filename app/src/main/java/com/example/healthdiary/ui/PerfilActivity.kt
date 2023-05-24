@@ -41,10 +41,10 @@ class Perfil : AppCompatActivity() {
         if(uri !=null){
             //tenemos imagen
             binding.imageperfil.setImageURI(uri) //traigo la uri (imagen seleccionada) despues de lanzar el launch desde el "boton"
-            //guardamos la foto escogida(uri) como string en la base de datos datastore. Hay que hacerlo en Corutina
+            //guardamos la foto escogida(pasandola a file) como string en la base de datos datastore. Hay que hacerlo en Corutina
             CoroutineScope(Dispatchers.IO).launch {
-                saveImagen(uri.toString(), uri)
-                Log.i("uri","$uri")
+                //llamo a la fun guardar imagen y le paso la uri ya que la necesito para convertirla a file y guardar la imagen en el dispositivo
+                saveImagen(uri)
             }
 
         }else{
@@ -155,8 +155,7 @@ class Perfil : AppCompatActivity() {
     }
 
     //creo una funcion para guardar la imagen
-    private suspend fun saveImagen(foto: String, uri: Uri){
-
+    private suspend fun saveImagen(uri: Uri){
         //guardo el uri de la imagen convertido a file y a su vez a bytes para guardarlo en el dispositivo
         val file = File(applicationContext.filesDir,"foto")
         val bytes = applicationContext.contentResolver.openInputStream(uri)?.readBytes()!!
@@ -166,8 +165,6 @@ class Perfil : AppCompatActivity() {
         //y la guardo en los settings como un string
         dataStore.edit { preferences ->
             preferences[stringPreferencesKey(IMAGEN)] = uridisp.toString()
-            Log.i("foto","$foto")
-            Log.i("file","$uridisp")
         }
     }
 
