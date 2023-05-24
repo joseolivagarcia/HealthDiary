@@ -7,6 +7,7 @@ import android.content.pm.PackageManager
 import android.graphics.drawable.Drawable
 import android.location.Location
 import android.location.LocationManager
+import android.net.Uri
 import android.os.Bundle
 import android.util.Log
 import android.widget.Toast
@@ -21,6 +22,7 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.example.healthdiary.R
 import com.example.healthdiary.adapter.NotasAdapter
 import com.example.healthdiary.adapter.RegistroPAAdapter
 import com.example.healthdiary.bd.ApiServices
@@ -60,10 +62,15 @@ class MainActivity : AppCompatActivity() {
     //variable para poder usar retrofit
     private lateinit var retrofit: Retrofit
 
+    private lateinit var imgpervia: String
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
+
+        //inicializo esta var con la ruta a la imagen que pondre por defecto como perfil
+        imgpervia = "android.resource://" + packageName + "/" + R.drawable.ic_profile
 
         idioma =  Locale.getDefault().language
         Log.i("idioma", "$idioma")
@@ -81,6 +88,7 @@ class MainActivity : AppCompatActivity() {
                 if (settingsModel != null) {
                     //como esto va a modificar la UI debe hacerse en el hilo ppal para que no pete
                     runOnUiThread {
+                        binding.ivPerfil.setImageURI(Uri.parse(settingsModel.foto))
                         binding.tvnombre.setText(settingsModel.nombre)
                         binding.tvaltura.setText("${settingsModel.altura} cm")
                         binding.tvpeso.setText("${settingsModel.peso} kg")
@@ -317,7 +325,7 @@ class MainActivity : AppCompatActivity() {
             //como los parametros pueden ser nulos usamos el operador elvis ?: para dar un valor por defecto si fuera nulo
             //el id del radiobutton del sexo me lo he inventado porque aqui no lo necesito (solo necesito el nombre)
             SettingsModel(
-                foto =preferences[stringPreferencesKey((Perfil.IMAGEN))] ?: "",
+                foto = preferences[stringPreferencesKey((Perfil.IMAGEN))] ?: imgpervia,
                 nombre = preferences[stringPreferencesKey(Perfil.NOMBRE)] ?: "Your name",
                 sexo = preferences[intPreferencesKey(Perfil.SEXO)] ?: 22233,
                 altura = preferences[intPreferencesKey(Perfil.ALTURA)] ?: 0,

@@ -67,10 +67,15 @@ class Perfil : AppCompatActivity() {
     private var firsttime = true
     private var imc: Float = 0f
 
+    private lateinit var imgprevia: String
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityPerfilBinding.inflate(layoutInflater)
         setContentView(binding.root)
+
+        //inicializo esta var con la ruta a la imagen que pondre por defecto como perfil
+        imgprevia = "android.resource://" + packageName + "/" + R.drawable.ic_profile
         /*
         * antes de inicializar la UI me tengo que enganchar al flow para que recupere los datos (settings)
         * que esten guardados o coja los que se crean por defecto. Esto logicamente hay que hacerlo en
@@ -91,6 +96,8 @@ class Perfil : AppCompatActivity() {
 
                         firsttime = !firsttime
                     }
+                }else{
+                    binding.imageperfil.setImageResource(R.drawable.ic_profile)
                 }
             }
         }
@@ -247,7 +254,7 @@ class Perfil : AppCompatActivity() {
             //creo un objeto de tipo SettingsModel pasandole los 6 parametros que he guardado
             //como los parametros pueden ser nulos usamos el operador elvis ?: para dar un valor por defecto si fuera nulo
             SettingsModel(
-                foto = preferences[stringPreferencesKey(IMAGEN)] ?: "",
+                foto = preferences[stringPreferencesKey(IMAGEN)] ?: imgprevia,
                 nombre = preferences[stringPreferencesKey(NOMBRE)] ?: "",
                 sexo = preferences[intPreferencesKey(SEXO)] ?: binding.rbhombre.id,
                 altura = preferences[intPreferencesKey(ALTURA)] ?: 150,
