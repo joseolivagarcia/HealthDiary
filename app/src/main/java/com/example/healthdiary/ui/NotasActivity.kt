@@ -58,11 +58,11 @@ class NotasActivity : AppCompatActivity() {
 
     private fun onItemDelete(nota: Nota_item_model){
         val dialog = AlertDialog.Builder(this)
-            .setMessage("¿Quieres eliminar ésta nota?")
+            .setMessage(getString(R.string.DeleteNote))
             .setNegativeButton("NO"){
                     view, _ -> view.dismiss()
             }
-            .setPositiveButton("SI"){
+            .setPositiveButton(getString(R.string.Yes)){
                     view, _ -> view.dismiss()
                 viewModel.deleteNota(nota)
             }

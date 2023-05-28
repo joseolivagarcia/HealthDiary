@@ -18,6 +18,5 @@
     <color name="degradado2">#7B1FA2</color>
     <color name="degradado3">#1D025C</color>
 
-    <color name="textoDia_Noche">#FFFFFFFF</color>
-
+    <color name="textoDia_Noche">#CECDCD</color>
 </resources>

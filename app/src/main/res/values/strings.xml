@@ -26,4 +26,6 @@
     <string name="pad">DIA</string>
     <string name="fc">HR</string>
     <string name="presi_n_arterial">BLOOD PRESSURE</string>
+    <string name="DeleteNote">Do you want delete this note?</string>
+    <string name="Yes">Yes</string>
 </resources>

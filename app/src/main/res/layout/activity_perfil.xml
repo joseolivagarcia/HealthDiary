@@ -51,9 +51,9 @@
                 android:layout_height="48dp"
                 android:layout_margin="16dp"
                 android:hint="@string/nombre_o_alias"
-                android:textColorHint="@color/white"
+                android:textColorHint="@color/textoDia_Noche"
                 app:hintAnimationEnabled="true"
-                android:textColor="@color/white"
+                android:textColor="@color/textoDia_Noche"
                 android:singleLine="true"
                 android:maxLength="14"/>
         </LinearLayout>
@@ -107,7 +107,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/altura"
-                    android:textColor="@color/white"/>
+                    android:textColor="@color/textoDia_Noche"/>
 
                 <com.google.android.material.slider.RangeSlider
                     android:id="@+id/rsAltura"
@@ -145,7 +145,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/peso"
-                    android:textColor="@color/white"/>
+                    android:textColor="@color/textoDia_Noche"/>
 
                 <com.google.android.material.slider.RangeSlider
                     android:id="@+id/rsPeso"
@@ -170,7 +170,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="2dp"
                 android:text="@string/imc"
-                android:textColor="@color/white"
+                android:textColor="@color/textoDia_Noche"
                 android:textSize="14sp"
                 android:textStyle="bold" />
 
@@ -207,13 +207,13 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/modo_oscuro"
-                    android:textColor="@color/white"/>
+                    android:textColor="@color/textoDia_Noche"/>
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/texto_modo_oscuro"
-                    android:textColor="@color/white"
+                    android:textColor="@color/textoDia_Noche"
                     android:textSize="11sp" />
             </LinearLayout>
 

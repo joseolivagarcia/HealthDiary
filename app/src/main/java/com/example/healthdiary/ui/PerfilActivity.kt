@@ -8,6 +8,9 @@ import android.os.Bundle
 import android.util.Log
 import androidx.activity.result.PickVisualMediaRequest
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.appcompat.app.AppCompatDelegate
+import androidx.appcompat.app.AppCompatDelegate.MODE_NIGHT_NO
+import androidx.appcompat.app.AppCompatDelegate.MODE_NIGHT_YES
 import androidx.core.widget.addTextChangedListener
 import androidx.datastore.core.DataStore
 import androidx.datastore.preferences.core.*
@@ -135,9 +138,9 @@ class Perfil : AppCompatActivity() {
         * */
         binding.switchdark.setOnCheckedChangeListener { _, value ->
             if(value){
-                //enableDarkMode()
+                enableDarkMode()
             }else{
-                //disableDarkMode()
+                disableDarkMode()
             }
             CoroutineScope(Dispatchers.IO).launch {
                 saveDarkmode(value)
@@ -262,7 +265,18 @@ class Perfil : AppCompatActivity() {
                 imc = preferences[floatPreferencesKey(IMC)] ?: 0f,
                 darkmode = preferences[booleanPreferencesKey(DARKMODE)] ?: false
             )
-
         }
+    }
+
+    private fun enableDarkMode(){
+
+        AppCompatDelegate.setDefaultNightMode(MODE_NIGHT_YES)
+        delegate.applyDayNight()
+
+    }
+
+    private fun disableDarkMode(){
+        AppCompatDelegate.setDefaultNightMode(MODE_NIGHT_NO)
+        delegate.applyDayNight()
     }
 }

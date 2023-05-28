@@ -26,4 +26,6 @@
     <string name="pad">PAD</string>
     <string name="fc">FC</string>
     <string name="presi_n_arterial">PRESIÓN ARTERIAL</string>
+    <string name="DeleteNote">¿Quieres eliminar ésta nota?</string>
+    <string name="Yes">SI</string>
 </resources>
