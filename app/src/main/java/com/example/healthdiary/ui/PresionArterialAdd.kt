@@ -54,7 +54,7 @@ class PresionArterialAdd : AppCompatActivity() {
             viewModel.addRegistro(newRegistro)
             //vuelvo a la actividad que muestra los datos en el recyclerview
             startActivity(Intent(applicationContext, PresionArterialActivity::class.java))
-            this.finish()
+            //this.finish()
         }
 
 

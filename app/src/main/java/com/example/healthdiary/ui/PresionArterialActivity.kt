@@ -69,4 +69,9 @@ class PresionArterialActivity : AppCompatActivity() {
             .create()
         dialog.show()
     }
+
+    override fun onBackPressed() {
+        val intent = Intent(this,MainActivity::class.java)
+        startActivity(intent)
+    }
 }

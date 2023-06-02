@@ -39,7 +39,8 @@
             android:exported="false" />
         <activity
             android:name=".ui.Perfil"
-            android:exported="false" />
+            android:exported="false">
+        </activity>
         <activity
             android:name=".ui.MainActivity"
             android:exported="true">

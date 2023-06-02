@@ -1,6 +1,7 @@
 package com.example.healthdiary.ui
 
 import android.content.Context
+import android.content.Intent
 import android.graphics.Color
 import android.net.Uri
 import androidx.appcompat.app.AppCompatActivity
@@ -278,5 +279,10 @@ class Perfil : AppCompatActivity() {
     private fun disableDarkMode(){
         AppCompatDelegate.setDefaultNightMode(MODE_NIGHT_NO)
         delegate.applyDayNight()
+    }
+
+    override fun onBackPressed() {
+        val intent = Intent(this,MainActivity::class.java)
+        startActivity(intent)
     }
 }
