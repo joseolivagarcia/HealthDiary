@@ -28,4 +28,6 @@
     <string name="presi_n_arterial">PRESIÓN ARTERIAL</string>
     <string name="DeleteNote">¿Quieres eliminar ésta nota?</string>
     <string name="Yes">SI</string>
+    <string name="edad">Edad</string>
+    <string name="age">Años</string>
 </resources>

@@ -64,7 +64,7 @@ class Perfil : AppCompatActivity() {
         const val ALTURA = "altura"
         const val PESO = "peso"
         const val IMC = "imc"
-        const val DARKMODE = "darkmode"
+        const val EDAD = "edad"
     }
 
     private lateinit var binding: ActivityPerfilBinding
@@ -96,7 +96,6 @@ class Perfil : AppCompatActivity() {
                         binding.rgsexo.check(settingsModel.sexo)
                         binding.rsPeso.setValues(settingsModel.peso)
                         binding.tvIMC.setText(settingsModel.imc.toString())
-                        binding.switchdark.isChecked = settingsModel.darkmode
 
                         firsttime = !firsttime
                     }
@@ -134,17 +133,9 @@ class Perfil : AppCompatActivity() {
             }
         }
 
-        /* Tambien hacemos lo mismo para los switchs. Estos su metodo para cuando lo cambiamos
-        * recibe un boton(que no nos interesa en este caso) y el boolean
-        * */
-        binding.switchdark.setOnCheckedChangeListener { _, value ->
-            if(value){
-                enableDarkMode()
-            }else{
-                disableDarkMode()
-            }
+        binding.rsEdad.addOnChangeListener{_,value,_ ->
             CoroutineScope(Dispatchers.IO).launch {
-                saveDarkmode(value)
+                saveEdad(value.toInt())
             }
         }
 
@@ -196,9 +187,9 @@ class Perfil : AppCompatActivity() {
         }
     }
     //creo tambien la funcion para almacenar si hemos seleccionado o no el modo oscuro
-    private suspend fun saveDarkmode(value: Boolean){
+    private suspend fun saveEdad(value: Int){
         dataStore.edit{ preferences ->
-            preferences[booleanPreferencesKey(DARKMODE)] = value
+            preferences[intPreferencesKey(EDAD)] = value
         }
     }
 
@@ -264,21 +255,9 @@ class Perfil : AppCompatActivity() {
                 altura = preferences[intPreferencesKey(ALTURA)] ?: 150,
                 peso = preferences[floatPreferencesKey(PESO)] ?: 60f,
                 imc = preferences[floatPreferencesKey(IMC)] ?: 0f,
-                darkmode = preferences[booleanPreferencesKey(DARKMODE)] ?: false
+                edad = preferences[intPreferencesKey(EDAD)] ?:18
             )
         }
-    }
-
-    private fun enableDarkMode(){
-
-        AppCompatDelegate.setDefaultNightMode(MODE_NIGHT_YES)
-        delegate.applyDayNight()
-
-    }
-
-    private fun disableDarkMode(){
-        AppCompatDelegate.setDefaultNightMode(MODE_NIGHT_NO)
-        delegate.applyDayNight()
     }
 
     override fun onBackPressed() {

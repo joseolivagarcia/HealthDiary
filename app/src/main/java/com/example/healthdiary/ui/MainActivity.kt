@@ -93,6 +93,8 @@ class MainActivity : AppCompatActivity() {
                         binding.tvnombre.setText(settingsModel.nombre)
                         binding.tvaltura.setText("${settingsModel.altura} cm")
                         binding.tvpeso.setText("${settingsModel.peso} kg")
+                        //binding.tvedad.setText("${settingsModel.edad} años")
+                        binding.tvedad.text = ("${settingsModel.edad} " + getString(R.string.age))
                     }
                 }
             }
@@ -332,7 +334,7 @@ class MainActivity : AppCompatActivity() {
                 altura = preferences[intPreferencesKey(Perfil.ALTURA)] ?: 0,
                 peso = preferences[floatPreferencesKey(Perfil.PESO)] ?: 0f,
                 imc = preferences[floatPreferencesKey(Perfil.IMC)] ?: 0f,
-                darkmode = preferences[booleanPreferencesKey(Perfil.DARKMODE)] ?: false
+                edad = preferences[intPreferencesKey(Perfil.EDAD)] ?: 18
             )
 
         }

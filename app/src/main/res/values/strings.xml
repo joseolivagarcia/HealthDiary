@@ -28,4 +28,6 @@
     <string name="presi_n_arterial">BLOOD PRESSURE</string>
     <string name="DeleteNote">Do you want delete this note?</string>
     <string name="Yes">Yes</string>
+    <string name="edad">Age</string>
+    <string name="age">y.o</string>
 </resources>

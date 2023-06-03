@@ -9,6 +9,6 @@ data class SettingsModel(
     var sexo: Int,
     var altura: Int,
     var peso: Float,
-    var darkmode: Boolean,
+    var edad: Int,
     var imc: Float
 )

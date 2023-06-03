@@ -64,8 +64,17 @@
                 android:textSize="24sp"
                 android:textStyle="bold"
                 android:maxLength="14"/>
+            <TextView
+                android:id="@+id/tvedad"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                tools:text="18 Años"
+                android:textColor="@color/degradado1"
+                android:textSize="16sp"
+                android:textStyle="italic"
+                android:layout_marginLeft="5dp"/>
             <LinearLayout
-                android:layout_width="match_parent"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal">
 
@@ -89,7 +98,6 @@
                     android:textStyle="italic"
                     android:layout_marginStart="10dp"/>
             </LinearLayout>
-
 
         </LinearLayout>
 
