@@ -51,8 +51,9 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/llhola">
         <LinearLayout
-            android:layout_width="180dp"
+            android:layout_width="200dp"
             android:layout_height="wrap_content"
+            android:layout_weight="1"
             android:orientation="vertical">
             <TextView
                 android:id="@+id/tvnombre"
@@ -74,7 +75,7 @@
                 android:textStyle="italic"
                 android:layout_marginLeft="5dp"/>
             <LinearLayout
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal">
 
@@ -97,16 +98,29 @@
                     android:textSize="16sp"
                     android:textStyle="italic"
                     android:layout_marginStart="10dp"/>
+                <TextView
+                    android:id="@+id/tvimc"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="5dp"
+                    tools:text="21 IMC"
+                    android:textColor="@color/degradado1"
+                    android:textSize="16sp"
+                    android:textStyle="italic"
+                    android:layout_marginStart="10dp"/>
+
             </LinearLayout>
 
         </LinearLayout>
-
         <de.hdodenhof.circleimageview.CircleImageView
             android:id="@+id/iv_perfil"
             android:layout_width="70dp"
             android:layout_height="70dp"
-            android:layout_marginStart="100dp"
-            android:src="@color/degradado1" />
+            android:layout_marginStart="50dp"
+            app:civ_border_width="2dp"
+            app:civ_border_color="@color/degradado2"
+            android:src="@color/degradado1"
+            android:layout_weight="1"/>
     </LinearLayout>
 
     <androidx.cardview.widget.CardView

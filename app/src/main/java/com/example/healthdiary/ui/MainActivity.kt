@@ -39,6 +39,7 @@ import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.launch
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
+import java.text.DecimalFormat
 import java.util.Locale
 
 class MainActivity : AppCompatActivity() {
@@ -87,14 +88,22 @@ class MainActivity : AppCompatActivity() {
         CoroutineScope(Dispatchers.IO).launch {
             getSettings().collect { settingsModel ->
                 if (settingsModel != null) {
+                    //doy un formato de dos decimales al peso y al imc que esta guardado
+                    val peso = settingsModel.peso
+                    val formato = DecimalFormat("#.##")
+                    val pesodosdec = formato.format(peso)
+                    val imc = settingsModel.imc
+                    val formato0 = DecimalFormat("#")
+                    val imcdosdec = formato0.format(imc)
                     //como esto va a modificar la UI debe hacerse en el hilo ppal para que no pete
                     runOnUiThread {
                         binding.ivPerfil.setImageURI(Uri.parse(settingsModel.foto))
-                        binding.tvnombre.setText(settingsModel.nombre)
-                        binding.tvaltura.setText("${settingsModel.altura} cm")
-                        binding.tvpeso.setText("${settingsModel.peso} kg")
+                        binding.tvnombre.text = settingsModel.nombre
+                        binding.tvaltura.text = "${settingsModel.altura} cm"
+                        binding.tvpeso.text = "$pesodosdec kg"
                         //binding.tvedad.setText("${settingsModel.edad} años")
                         binding.tvedad.text = ("${settingsModel.edad} " + getString(R.string.age))
+                        binding.tvimc.text = ("$imcdosdec " + getString(R.string.imc))
                     }
                 }
             }

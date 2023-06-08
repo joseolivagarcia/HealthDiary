@@ -92,6 +92,7 @@ class Perfil : AppCompatActivity() {
                         //binding.imageperfil.setImageResource(R.drawable.ic_profile) //mientras arreglo lo de los permisos
                         binding.imageperfil.setImageURI(Uri.parse(settingsModel.foto))
                         binding.etnombre.setText(settingsModel.nombre)
+                        binding.rsEdad.setValues(settingsModel.edad.toFloat())
                         binding.rsAltura.setValues(settingsModel.altura.toFloat())
                         binding.rgsexo.check(settingsModel.sexo)
                         binding.rsPeso.setValues(settingsModel.peso)
